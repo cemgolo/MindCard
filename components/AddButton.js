@@ -1,12 +1,23 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Modal } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import AddNewDeck from './AddNewDeck';
 
-const AddButton = () => {
+const AddButton = ({ onCreateNewDeck }) => {
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
+  const [isAddNewDeckVisible, setIsAddNewDeckVisible] = useState(false);
 
   const toggleDropdown = () => {
     setIsDropdownVisible(!isDropdownVisible);
+  };
+
+  const openAddNewDeckModal = () => {
+    setIsDropdownVisible(false); // Close the dropdown
+    setIsAddNewDeckVisible(true); // Open the AddNewDeck modal
+  };
+
+  const closeAddNewDeckModal = () => {
+    setIsAddNewDeckVisible(false); // Close the modal
   };
 
   return (
@@ -19,7 +30,7 @@ const AddButton = () => {
       {/* Dropdown */}
       {isDropdownVisible && (
         <View style={styles.dropdown}>
-          <TouchableOpacity style={styles.option} onPress={() => alert('Add New Deck')}>
+          <TouchableOpacity style={styles.option} onPress={openAddNewDeckModal}>
             <Icon name="folder" size={20} color="#333" />
             <Text style={styles.optionText}>Add new deck</Text>
           </TouchableOpacity>
@@ -33,6 +44,20 @@ const AddButton = () => {
           </TouchableOpacity>
         </View>
       )}
+
+      {/* Add New Deck Modal */}
+      <Modal
+        visible={isAddNewDeckVisible}
+        animationType="slide"
+        transparent={true}
+        onRequestClose={closeAddNewDeckModal}
+      >
+        <AddNewDeck
+          visible={isAddNewDeckVisible}
+          onClose={closeAddNewDeckModal}
+          onCreate={onCreateNewDeck} // Pass callback to handle new deck creation
+        />
+      </Modal>
     </View>
   );
 };
