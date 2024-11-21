@@ -3,43 +3,36 @@ import { View, Text, TouchableOpacity, StyleSheet, Modal } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 const AddButton = () => {
-  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isDropdownVisible, setIsDropdownVisible] = useState(false);
 
-  const toggleModal = () => {
-    setIsModalVisible(!isModalVisible);
+  const toggleDropdown = () => {
+    setIsDropdownVisible(!isDropdownVisible);
   };
 
   return (
     <View style={styles.container}>
       {/* "+" Button */}
-      <TouchableOpacity onPress={toggleModal} style={styles.addButton}>
+      <TouchableOpacity onPress={toggleDropdown} style={styles.addButton}>
         <Icon name="add" size={24} color="white" />
       </TouchableOpacity>
 
-      {/* Modal */}
-      <Modal
-        visible={isModalVisible}
-        transparent={true}
-        animationType="fade"
-        onRequestClose={toggleModal}
-      >
-        <TouchableOpacity style={styles.modalOverlay} onPress={toggleModal}>
-          <View style={styles.modalContent}>
-            <TouchableOpacity style={styles.option} onPress={() => alert('Add New Deck')}>
-              <Icon name="folder" size={20} color="#333" />
-              <Text style={styles.optionText}>Add new deck</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.option} onPress={() => alert('Explore Decks')}>
-              <Icon name="explore" size={20} color="#333" />
-              <Text style={styles.optionText}>Explore decks</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.option} onPress={() => alert('Add Card')}>
-              <Icon name="note-add" size={20} color="#333" />
-              <Text style={styles.optionText}>Add card</Text>
-            </TouchableOpacity>
-          </View>
-        </TouchableOpacity>
-      </Modal>
+      {/* Dropdown */}
+      {isDropdownVisible && (
+        <View style={styles.dropdown}>
+          <TouchableOpacity style={styles.option} onPress={() => alert('Add New Deck')}>
+            <Icon name="folder" size={20} color="#333" />
+            <Text style={styles.optionText}>Add new deck</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.option} onPress={() => alert('Explore Decks')}>
+            <Icon name="explore" size={20} color="#333" />
+            <Text style={styles.optionText}>Explore decks</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.option} onPress={() => alert('Add Card')}>
+            <Icon name="note-add" size={20} color="#333" />
+            <Text style={styles.optionText}>Add card</Text>
+          </TouchableOpacity>
+        </View>
+      )}
     </View>
   );
 };
@@ -63,23 +56,25 @@ const styles = StyleSheet.create({
     shadowRadius: 8,
     elevation: 5,
   },
-  modalOverlay: {
-    flex: 1,
-    backgroundColor: 'rgba(0,0,0,0.4)',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  modalContent: {
-    width: 250,
+  dropdown: {
+    position: 'absolute',
+    bottom: 80, // Position dropdown above the button
+    right: 0, // Align dropdown to the right edge
     backgroundColor: '#f0f0f0',
     borderRadius: 8,
-    padding: 16,
-    alignItems: 'flex-start',
+    padding: 8,
+    width: 200,
+    shadowColor: '#000',
+    shadowOpacity: 0.2,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 8,
+    elevation: 5,
   },
   option: {
     flexDirection: 'row',
     alignItems: 'center',
     paddingVertical: 12,
+    paddingHorizontal: 8,
   },
   optionText: {
     marginLeft: 12,
