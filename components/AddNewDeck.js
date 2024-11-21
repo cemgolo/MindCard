@@ -8,9 +8,10 @@ const AddNewDeck = ({ onClose }) => {
   const dispatch = useDispatch();
 
   const handleCreateDeck = () => {
-    if (deckName.trim()) {
+    const trimmedDeckName = deckName.trim();
+    if (trimmedDeckName) {
       dispatch(addDeck({ // Add the new deck to the list
-        name: deckName,
+        name: trimmedDeckName,
         totalCards: 0,
         cardsPerRound: 10,
         performance: { seen: 0, learned: 0, failed: 0, toReview: 0 }
