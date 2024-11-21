@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, Modal, StyleSheet } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Modal } from 'react-native';
+import globalStyles from '/styles/styles';
 
 const AddNewDeck = ({ visible, onClose, onCreate }) => {
   const [deckName, setDeckName] = useState('');
@@ -31,12 +32,12 @@ const AddNewDeck = ({ visible, onClose, onCreate }) => {
             value={deckName}
             onChangeText={setDeckName}
           />
-          <View style={styles.buttonContainer}>
-            <TouchableOpacity style={styles.cancelButton} onPress={onClose}>
-              <Text style={styles.cancelButtonText}>CANCEL</Text>
+          <View style={globalStyles.buttonContainer}>
+            <TouchableOpacity style={globalStyles.cancelButton} onPress={onClose}>
+              <Text style={globalStyles.cancelButtonText}>CANCEL</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.createButton} onPress={handleCreate}>
-              <Text style={styles.createButtonText}>CREATE</Text>
+            <TouchableOpacity style={globalStyles.createButton} onPress={handleCreate}>
+              <Text style={globalStyles.createButtonText}>CREATE</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -77,35 +78,6 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     padding: 10,
     marginBottom: 20,
-  },
-  buttonContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: '100%',
-  },
-  cancelButton: {
-    padding: 10,
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 8,
-    flex: 1,
-    marginRight: 10,
-    alignItems: 'center',
-  },
-  cancelButtonText: {
-    color: '#333',
-    fontSize: 16,
-  },
-  createButton: {
-    padding: 10,
-    backgroundColor: '#007bff',
-    borderRadius: 8,
-    flex: 1,
-    alignItems: 'center',
-  },
-  createButtonText: {
-    color: '#fff',
-    fontSize: 16,
   },
 });
 

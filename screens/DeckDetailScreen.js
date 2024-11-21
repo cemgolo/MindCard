@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, Button } from 'react-native';
+import globalStyles from '../styles/styles';
 
 const DeckDetailScreen = ({ route, navigation }) => {
   const { deck } = route.params;
@@ -18,7 +19,8 @@ const DeckDetailScreen = ({ route, navigation }) => {
       </Text>
 
       {/* Start Button */}
-      <Button title="Start" onPress={() => console.log('Start deck')} />
+      <Button style={globalStyles.createButton} title="Start" onPress={() => console.log('Start deck')} />
+      <Button style={globalStyles.cancelButton} title="Edit" onPress={() => {}} />
     </View>
   );
 };

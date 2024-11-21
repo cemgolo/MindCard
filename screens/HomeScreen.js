@@ -24,6 +24,7 @@ const HomeScreen = () => {
     <View style={styles.container}>
       <Text style={styles.screenName}>Status</Text>
       <StatusBar />
+      <Text style={styles.headerTitle}>Decks</Text>
       <DeckList />
       <AddButton />
     </View>
