@@ -1,9 +1,20 @@
-const AddNewDeck = ({ onClose, addDeck }) => {
+import { useDispatch } from "react-redux";
+import { addDeck } from "../storage/actions";
+import { useState } from "react";
+import { View } from "react-native";
+
+const AddNewDeck = ({ onClose }) => {
   const [deckName, setDeckName] = useState('');
+  const dispatch = useDispatch();
 
   const handleCreateDeck = () => {
     if (deckName.trim()) {
-      addDeck(deckName); // Add the new deck to the list
+      dispatch(addDeck({ // Add the new deck to the list
+        name: deckName,
+        totalCards: 0,
+        cardsPerRound: 10,
+        performance: { seen: 0, learned: 0, failed: 0, toReview: 0 }
+      }));
       onClose(); // Close the modal
     } else {
       alert('Please enter a deck name!');
@@ -38,3 +49,5 @@ const AddNewDeck = ({ onClose, addDeck }) => {
     </View>
   );
 };
+
+export default AddNewDeck;
