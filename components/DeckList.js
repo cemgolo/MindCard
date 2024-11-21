@@ -1,27 +1,11 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { useSelector } from 'react-redux';
 
 const DeckList = () => {
   const navigation = useNavigation();
-
-  // Sample decks data
-  const decks = [
-    {
-      id: '1',
-      name: 'Fruit vocab',
-      totalCards: 50,
-      cardsPerRound: 10,
-      performance: { seen: 30, learned: 20, failed: 5, toReview: 5 },
-    },
-    {
-      id: '2',
-      name: 'Rocket science',
-      totalCards: 80,
-      cardsPerRound: 10,
-      performance: { seen: 40, learned: 30, failed: 10, toReview: 0 },
-    },
-  ];
+  const decks = useSelector(state => state.decks);
 
   const handleDeckPress = (deck) => {
     navigation.navigate('DeckDetail', { deck });
@@ -36,7 +20,7 @@ const DeckList = () => {
   return (
     <FlatList
       data={decks}
-      keyExtractor={(item) => item.id}
+      keyExtractor={(_, i) => i}
       renderItem={renderDeckItem}
       contentContainerStyle={styles.listContainer}
     />
