@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import DeckList from '../components/DeckList';
@@ -7,6 +7,7 @@ import AddButton from '../components/AddButton';
 
 const HomeScreen = () => {
   const navigation = useNavigation();
+  const [decks, setDecks] = useState([]); // State to manage the list of decks
 
   useEffect(() => {
     // Set the title for the header when the screen is rendered
@@ -20,12 +21,17 @@ const HomeScreen = () => {
     });
   }, [navigation]);
 
+  // Function to add a new deck
+  const addDeck = (deckName) => {
+    setDecks((prevDecks) => [...prevDecks, { id: Date.now(), name: deckName }]);
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.screenName}>Status</Text>
       <StatusBar />
-      <DeckList />
-      <AddButton />
+      <DeckList decks={decks} /> {/* Pass decks to the DeckList component */}
+      <AddButton addDeck={addDeck} /> {/* Pass addDeck function to AddButton */}
     </View>
   );
 };
