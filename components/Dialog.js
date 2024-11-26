@@ -1,6 +1,6 @@
 import { TouchableOpacity, View, Text, StyleSheet } from "react-native";
-import buttonStyles from "../styles/buttons";
 import Modal from "react-native-modal";
+import buttonStyles from "../styles/buttons";
 
 const Dialog = ({ children, isOpen, title = "Unnamed Dialog", confirmLabel = "Confirm", onConfirm, onCancel }) => {
     return (
