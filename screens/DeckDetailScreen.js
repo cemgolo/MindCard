@@ -18,9 +18,10 @@ const DeckDetailScreen = ({ route, navigation }) => {
         {deck.performance.failed} failed, {deck.performance.toReview} to review
       </Text>
 
-      {/* Start Button */}
-      <Button style={globalStyles.createButton} title="Start" onPress={() => console.log('Start deck')} />
-      <Button style={globalStyles.cancelButton} title="Edit" onPress={() => {}} />
+      {/* Buttons */}
+      <Button color="#007bff" title="Start" onPress={() => console.log('Start deck')} />
+      <View style={{ height: 5}} />
+      <Button color="#ccc" title="Edit" onPress={() => {}} />
     </View>
   );
 };
