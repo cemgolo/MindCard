@@ -1,6 +1,6 @@
 import React from 'react';
-import { View, Text, StyleSheet, Button } from 'react-native';
-import globalStyles from '../styles/styles';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import buttonStyles from '../styles/buttons';
 
 const DeckDetailScreen = ({ route, navigation }) => {
   const { deck } = route.params;
@@ -19,9 +19,14 @@ const DeckDetailScreen = ({ route, navigation }) => {
       </Text>
 
       {/* Buttons */}
-      <Button color="#007bff" title="Start" onPress={() => console.log('Start deck')} />
-      <View style={{ height: 5}} />
-      <Button color="#ccc" title="Edit" onPress={() => {}} />
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity style={[buttonStyles.secondary, {flex: 1}]} onPress={() => console.log("Edit deck")}>
+          <Text style={buttonStyles.secondaryText}>Edit</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={[buttonStyles.primary, {flex: 3}]} onPress={() => console.log("Start deck")}>
+          <Text style={buttonStyles.primaryText}>Start</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -44,6 +49,11 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: '#555',
     marginVertical: 5,
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    gap: 5,
+    margin: 50,
   },
 });
 
