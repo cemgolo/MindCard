@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Modal } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import AddNewDeck from './AddNewDeck';
+import AddNewDeckDialog from './AddNewDeckDialog';
 
 const AddButton = () => {
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
@@ -38,9 +38,7 @@ const AddButton = () => {
       )}
 
       {/* Add New Deck Modal */}
-      <Modal visible={isAddDeckVisible} animationType="slide" transparent={true}>
-        <AddNewDeck onClose={closeAddDeckModal} />
-      </Modal>
+      <AddNewDeckDialog isOpen={isAddDeckVisible} onClose={closeAddDeckModal} />
     </View>
   );
 };
