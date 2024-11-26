@@ -20,14 +20,14 @@ const ButtonContainer = ({ confirmLabel, onConfirm, onCancel }) => {
     return (
         <View style={styles.buttonContainer}>
             <TouchableOpacity
-            style={buttonStyles.secondary}
+            style={[buttonStyles.secondary, {flex: 1}]}
             onPress={onCancel}
             >
                 <Text style={buttonStyles.secondaryText}>Cancel</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
-            style={buttonStyles.primary}
+            style={[buttonStyles.primary, {flex: 1}]}
             onPress={onConfirm}
             >
                 <Text style={buttonStyles.primaryText}>{confirmLabel}</Text>
@@ -56,7 +56,6 @@ const styles = StyleSheet.create({
     },
     buttonContainer: {
       flexDirection: 'row',
-      justifyContent: 'space-between',
       width: '100%',
     }
 });

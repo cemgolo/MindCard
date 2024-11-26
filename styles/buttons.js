@@ -6,7 +6,6 @@ const buttonStyles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#ccc',
     borderRadius: 8,
-    flex: 1,
     marginRight: 10,
     alignItems: 'center',
   },
@@ -18,7 +17,6 @@ const buttonStyles = StyleSheet.create({
     padding: 10,
     backgroundColor: '#007bff',
     borderRadius: 8,
-    flex: 1,
     alignItems: 'center',
   },
   primaryText: {
