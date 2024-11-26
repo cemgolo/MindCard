@@ -5,12 +5,10 @@ import Modal from "react-native-modal";
 const Dialog = ({ children, isOpen, title = "Unnamed Dialog", confirmLabel = "Confirm", onConfirm, onCancel }) => {
     return (
         <Modal isVisible={isOpen} animationIn={"fadeInUp"} animationOut={"fadeOutDown"} backdropTransitionOutTiming={-1}>
-            <View style={styles.modalContainer}>
-                <View style={styles.contentContainer}>
-                    <Text style={styles.title}>{title}</Text>
-                    {children}
-                    <ButtonContainer confirmLabel={confirmLabel} onConfirm={onConfirm} onCancel={onCancel} />
-                </View>
+            <View style={styles.contentContainer}>
+                <Text style={styles.title}>{title}</Text>
+                {children}
+                <ButtonContainer confirmLabel={confirmLabel} onConfirm={onConfirm} onCancel={onCancel} />
             </View>
         </Modal>
     );
@@ -37,17 +35,13 @@ const ButtonContainer = ({ confirmLabel, onConfirm, onCancel }) => {
 }
 
 const styles = StyleSheet.create({
-    modalContainer: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
     contentContainer: {
       backgroundColor: '#fff',
       borderRadius: 10,
       padding: 20,
       width: '80%',
       alignItems: 'center',
+      margin: 'auto'
     },
     title: {
       fontSize: 20,
