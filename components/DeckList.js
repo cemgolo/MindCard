@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
+import { Text, TouchableOpacity, FlatList, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useSelector } from 'react-redux';
 
@@ -20,7 +20,7 @@ const DeckList = () => {
   return (
     <FlatList
       data={decks}
-      keyExtractor={(_, i) => i}
+      keyExtractor={(item, index) => index.toString()}
       renderItem={renderDeckItem}
       contentContainerStyle={styles.listContainer}
     />
