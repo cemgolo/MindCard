@@ -18,4 +18,3 @@ const storeOptions = {
 
 export const deckStore = configureStore(storeOptions);
 export const deckPersistor = persistStore(deckStore);
-
