@@ -1,15 +1,14 @@
-import { useState } from 'react';
-import React from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
   TouchableOpacity,
   StyleSheet,
-  TextInput
+  TextInput,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import CardList from '../components/CardList';
-import SearchButton from '../components/SearchButton';
+import SearchHeader from '../components/SearchHeader';
 
 const EditDeckScreen = ({ route, navigation }) => {
   const { deck } = route.params;
@@ -25,33 +24,33 @@ const EditDeckScreen = ({ route, navigation }) => {
   return (
     <View style={styles.container}>
       {/* Header */}
-      <View style={styles.header}>
-        {isEditing ? (
-          <TextInput
-            style={styles.deckNameInput}
-            value={deckName}
-            onChangeText={setDeckName}
-            autoFocus
-            onSubmitEditing={handleSave} // Save on pressing Enter
-          />
-        ) : (
-          <Text style={styles.deckName}>{deckName}</Text>
-        )}
+      <SearchHeader outerStyle={styles.header} searchText={searchText} setSearchText={setSearchText}>
+          <View style={styles.headerContent}>
+            {isEditing ? (
+              <TextInput
+                style={styles.deckNameInput}
+                value={deckName}
+                onChangeText={setDeckName}
+                autoFocus
+                onSubmitEditing={handleSave} // Save on pressing Enter
+              />
+            ) : (
+              <Text style={styles.deckName}>{deckName}</Text>
+            )}
+            <View style={styles.headerIcons}>
+              <TouchableOpacity onPress={() => setIsEditing(!isEditing)}>
+                <Icon
+                  name={isEditing ? 'check' : 'edit'}
+                  size={24}
+                  color="#333"
+                />
+              </TouchableOpacity>
+              {/* Search Icon */}
+            </View>
+          </View>
+      </SearchHeader>
 
-        <View style={styles.headerIcons}>
-          <TouchableOpacity onPress={() => setIsEditing(!isEditing)}>
-            <Icon
-              name={isEditing ? 'check' : 'edit'}
-              size={24}
-              color="#333"
-            />
-          </TouchableOpacity>
-
-          {/* Search Icon */}
-          <SearchButton setSearchText={setSearchText} />
-        </View>
-      </View>
-
+      {/* Card List */}
       <CardList searchText={searchText} />
 
       {/* Floating Add Button */}
@@ -71,11 +70,15 @@ const styles = StyleSheet.create({
     backgroundColor: '#f4f4f4',
   },
   header: {
+    backgroundColor: '#ccc',
+    padding: 15,
+  },
+  headerContent: {
+    flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: '#ccc',
-    padding: 15,
+    height: "100%"
   },
   deckName: {
     fontSize: 18,
@@ -86,14 +89,22 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     color: '#333',
-    flex: 1,
+    height: "100%"
   },
   headerIcons: {
     flexDirection: 'row',
     alignItems: 'center',
   },
-  icon: {
-    marginLeft: 16,
+  searchBar: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    borderRadius: 5,
+    height: 40,
+  },
+  searchInput: {
+    flex: 1,
+    fontSize: 16,
   },
   addButton: {
     position: 'absolute',

@@ -4,21 +4,23 @@ import { useNavigation } from '@react-navigation/native';
 import DeckList from '../components/DeckList';
 import StatusBar from '../components/StatusBar';
 import AddButton from '../components/AddButton';
+import SearchHeader from '../components/SearchHeader';
 
 const HomeScreen = () => {
   const navigation = useNavigation();
+  const [searchText, setSearchText] = useState(''); // State for search input
 
   useEffect(() => {
     // Set the title for the header when the screen is rendered
     navigation.setOptions({
       headerTitle: () => (
-        <View style={styles.headerContainer}>
+        <SearchHeader style={styles.headerContainer} searchText={searchText} setSearchText={setSearchText}>
           <Text style={styles.headerTitle}>MindCard</Text>
           <Text style={styles.screenName}>Home</Text>
-        </View>
+        </SearchHeader>
       ),
     });
-  }, [navigation]);
+  }, [navigation, searchText]);
 
   return (
     <View style={styles.container}>
