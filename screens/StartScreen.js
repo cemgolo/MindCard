@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import FlashCard from '../components/FlashCard';
 
-const StartScreen = ({ route }) => {
+const StartScreen = ({ route, navigation }) => {
   const { deck } = route.params;
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
   const [flipped, setFlipped] = useState(false); // Manage flipped state here
@@ -20,7 +20,7 @@ const StartScreen = ({ route }) => {
       setCurrentCardIndex(currentCardIndex + 1);
       setFlipped(false); // Reset flipped state when moving to the next card
     } else {
-      alert('You have completed the deck!');
+      navigation.navigate('ReviewRoundScreen', { performanceData: [0.4, 0, 0.2, 0] });
     }
   };
 
