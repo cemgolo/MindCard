@@ -7,7 +7,7 @@ import buttonStyles from '../styles/buttons';
 const screenWidth = Dimensions.get('window').width;
 
 const ReviewRoundScreen = ({ navigation, route }) => {
-  const { performanceData } = route.params;
+  const { performanceData, deck } = route.params;
 
   const data = {
     labels: ['Fail', 'Slow', 'Average', 'Fast'],
@@ -44,7 +44,7 @@ const ReviewRoundScreen = ({ navigation, route }) => {
         <TouchableOpacity style={[buttonStyles.secondary, {flex: 1}]} onPress={() => navigation.popToTop()}>
             <Text style={buttonStyles.secondaryText}>Home</Text>
           </TouchableOpacity>      
-          <TouchableOpacity style={[buttonStyles.primary, {flex: 1.5}]} onPress={() => navigation.pop()}>
+          <TouchableOpacity style={[buttonStyles.primary, {flex: 1.5}]} onPress={() => navigation.popTo("DeckDetail", {deck})}>
             <Text style={buttonStyles.primaryText}>Again</Text>
           </TouchableOpacity>
       </View>
