@@ -1,69 +1,65 @@
+import { useState } from 'react';
 import React from 'react';
 import {
   View,
   Text,
-  FlatList,
   TouchableOpacity,
   StyleSheet,
-  TextInput,
-  Image,
+  TextInput
 } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import CardList from '../components/CardList';
+import SearchButton from '../components/SearchButton';
 
 const EditDeckScreen = ({ route, navigation }) => {
   const { deck } = route.params;
+  const [deckName, setDeckName] = useState(deck.name); // State for deck name
+  const [isEditing, setIsEditing] = useState(false); // State for edit mode
+  const [searchText, setSearchText] = useState(''); // State for search input
 
-  // Sample card data (replace with actual data)
-  const cards = deck.cards || [
-    { id: '1', name: 'An orange', image: require('../assets/orange.jpeg') },
-    { id: '2', name: 'A pear', image: require('../assets/orange.jpeg') },
-    { id: '3', name: 'A banana', image: require('../assets/orange.jpeg') },
-    { id: '4', name: 'A tomato', image: require('../assets/orange.jpeg') },
-    { id: '5', name: 'An apple', image: require('../assets/orange.jpeg') },
-  ];
-
-  const renderCard = ({ item }) => (
-    <View style={styles.cardContainer}>
-      {/* Card Image */}
-      <Image source={item.image} style={styles.cardImage} />
-      {/* Card Name */}
-      <Text style={styles.cardText}>{item.name}</Text>
-      {/* Edit Icon */}
-      <TouchableOpacity onPress={() => console.log(`Edit card: ${item.name}`)}>
-        <Ionicons name="pencil" size={24} color="#333" />
-      </TouchableOpacity>
-    </View>
-  );
+  const handleSave = () => {
+    console.log('Updated Deck Name:', deckName);
+    setIsEditing(false); // Exit edit mode
+  };
 
   return (
     <View style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
-        <Text style={styles.deckName}>{deck.name}</Text>
+        {isEditing ? (
+          <TextInput
+            style={styles.deckNameInput}
+            value={deckName}
+            onChangeText={setDeckName}
+            autoFocus
+            onSubmitEditing={handleSave} // Save on pressing Enter
+          />
+        ) : (
+          <Text style={styles.deckName}>{deckName}</Text>
+        )}
+
         <View style={styles.headerIcons}>
-        <TouchableOpacity onPress={() => console.log('Edit icon clicked')}>
-            <Ionicons name="pencil" size={24} color="#333" />
+          <TouchableOpacity onPress={() => setIsEditing(!isEditing)}>
+            <Icon
+              name={isEditing ? 'check' : 'edit'}
+              size={24}
+              color="#333"
+            />
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => console.log('Search icon clicked')}>
-            <Ionicons name="search" size={24} color="#333" style={styles.icon} />
-          </TouchableOpacity>
+
+          {/* Search Icon */}
+          <SearchButton setSearchText={setSearchText} />
         </View>
       </View>
 
-      {/* Cards List */}
-      <FlatList
-        data={cards}
-        renderItem={renderCard}
-        keyExtractor={(item) => item.id}
-        contentContainerStyle={styles.cardList}
-      />
+      <CardList searchText={searchText} />
 
       {/* Floating Add Button */}
       <TouchableOpacity
         style={styles.addButton}
         onPress={() => console.log('Add new card')}
       >
-        <Ionicons name="add" size={36} color="#fff" />
+        <Icon name="add" size={38} color="#fff" />
       </TouchableOpacity>
     </View>
   );
@@ -86,33 +82,18 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#333',
   },
+  deckNameInput: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#333',
+    flex: 1,
+  },
   headerIcons: {
     flexDirection: 'row',
     alignItems: 'center',
   },
   icon: {
-    marginLeft: 15,
-  },
-  cardList: {
-    padding: 10,
-  },
-  cardContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#eaeaea',
-    padding: 10,
-    marginVertical: 5,
-    borderRadius: 8,
-  },
-  cardImage: {
-    width: 40,
-    height: 40,
-    marginRight: 10,
-  },
-  cardText: {
-    flex: 1,
-    fontSize: 16,
-    color: '#333',
+    marginLeft: 16,
   },
   addButton: {
     position: 'absolute',

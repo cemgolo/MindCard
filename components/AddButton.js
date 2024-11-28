@@ -24,7 +24,7 @@ const AddButton = () => {
     <View style={styles.container}>
       {/* "+" Button */}
       <TouchableOpacity onPress={toggleDropdown} style={styles.addButton}>
-        <Icon name="add" size={24} color="white" />
+        <Icon name="add" size={36} color="white" />
       </TouchableOpacity>
 
       {/* Dropdown */}
