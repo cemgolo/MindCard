@@ -41,10 +41,10 @@ const ReviewRoundScreen = ({ navigation, route }) => {
         }}
       />
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={[buttonStyles.secondary, {flex: 1}]} onPress={() => navigation.navigate("Home")}>
+        <TouchableOpacity style={[buttonStyles.secondary, {flex: 1}]} onPress={() => navigation.popToTop()}>
             <Text style={buttonStyles.secondaryText}>Home</Text>
           </TouchableOpacity>      
-          <TouchableOpacity style={[buttonStyles.primary, {flex: 1.5}]} onPress={() => navigation.navigate("StartScreen")}>
+          <TouchableOpacity style={[buttonStyles.primary, {flex: 1.5}]} onPress={() => navigation.pop()}>
             <Text style={buttonStyles.primaryText}>Again</Text>
           </TouchableOpacity>
       </View>
