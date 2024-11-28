@@ -1,15 +1,20 @@
-// src/storage/persist-storage.js
-import { createStore } from 'redux';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { persistStore, persistReducer } from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
 import deckReducer from './reducer';
+import { configureStore } from '@reduxjs/toolkit';
 
 const persistConfig = {
-  key: 'root',
-  storage,
-};
+    key: 'root',
+    storage: AsyncStorage,
+}
 
 const persistedReducer = persistReducer(persistConfig, deckReducer);
+const storeOptions = {
+    reducer: persistedReducer,
+    middleware: getDefaultMiddleware => getDefaultMiddleware({
+        serializableCheck: false,
+    }),
+}
 
-export const deckStore = createStore(persistedReducer);
+export const deckStore = configureStore(storeOptions);
 export const deckPersistor = persistStore(deckStore);
