@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react'
 import HomeScreen from './screens/HomeScreen';
 import DeckDetailScreen from './screens/DeckDetailScreen';
-import CardsScreen from './screens/CardsScreen';
+import StartScreen from './screens/StartScreen';
 import { deckStore, deckPersistor } from './storage/persist-storage';
 
 const Stack = createStackNavigator();
@@ -18,7 +18,7 @@ const App = () => {
           <Stack.Navigator initialRouteName="Home">
             <Stack.Screen name="Home" component={HomeScreen} />
             <Stack.Screen name="DeckDetail" component={DeckDetailScreen} options={({ route }) => ({ title: route.params.deck.name })} />
-            <Stack.Screen name="CardsScreen" component={CardsScreen} options={({ route }) => ({ title: route.params.deck.name })} />
+            <Stack.Screen name="StartScreen" component={StartScreen} options={({ route }) => ({ title: route.params.deck.name })} />
           </Stack.Navigator>
         </NavigationContainer>
       </PersistGate>
