@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import { View, TextInput, TouchableOpacity, StyleSheet, Text } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-const SearchHeader = ({children, style, outerStyle, searchText, setSearchText }) => {
+const SearchHeader = ({children, style, outerStyle, searchText, setSearchText, placehold}) => {
   const [isSearching, setIsSearching] = useState(false);
 
   const toggleSearch = () => {
-    if(isSearching) setSearchText("");
+    if(isSearching) setSearchText('');
     setIsSearching(!isSearching); // Toggle search mode
   };
 
@@ -23,7 +23,7 @@ const SearchHeader = ({children, style, outerStyle, searchText, setSearchText })
             style={styles.searchInput}
             value={searchText}
             onChangeText={handleSearchChange}
-            placeholder="Search cards..."
+            placeholder= {placehold}
             autoFocus
           />
           <TouchableOpacity onPress={toggleSearch}>
@@ -35,7 +35,6 @@ const SearchHeader = ({children, style, outerStyle, searchText, setSearchText })
             <View style={[style]}>
               {children}
             </View>
-            {/* Search Icon */}
             <TouchableOpacity onPress={toggleSearch}>
               <Icon name="search" size={26} color="#333" style={styles.icon} />
             </TouchableOpacity>

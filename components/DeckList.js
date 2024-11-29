@@ -3,9 +3,14 @@ import { Text, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useSelector } from 'react-redux';
 
-const DeckList = () => {
+const DeckList = ({ searchText }) => {
   const navigation = useNavigation();
   const decks = useSelector(state => state.decks);
+
+  // Filter decks based on the search text
+  const filteredDecks = decks.filter(deck =>
+    deck.name.toLowerCase().includes(searchText.toLowerCase())
+  );
 
   const handleDeckPress = (deck) => {
     navigation.navigate('DeckDetail', { deck });
@@ -19,7 +24,7 @@ const DeckList = () => {
 
   return (
     <FlatList
-      data={decks}
+      data={filteredDecks}
       keyExtractor={(_, i) => i}
       renderItem={renderDeckItem}
       contentContainerStyle={styles.listContainer}

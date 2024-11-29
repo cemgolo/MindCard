@@ -14,19 +14,27 @@ const HomeScreen = () => {
     // Set the title for the header when the screen is rendered
     navigation.setOptions({
       headerTitle: () => (
-        <SearchHeader style={styles.headerContainer} searchText={searchText} setSearchText={setSearchText}>
+        <View style={styles.headerRow}>
           <Text style={styles.headerTitle}>MindCard</Text>
           <Text style={styles.screenName}>Home</Text>
-        </SearchHeader>
+        </View>
       ),
     });
-  }, [navigation, searchText]);
+  }, [navigation]);
 
   return (
     <View style={styles.container}>
-      <Text style={styles.screenName}>Status</Text>
+      <Text style={styles.subtitle}>Status</Text>
       <StatusBar />
-      <DeckList />
+      <SearchHeader
+        outerStyle={styles.header}
+        searchText={searchText}
+        setSearchText={setSearchText}
+        placehold={'Search decks...'}
+      >
+        <Text style={styles.subtitle}>Decks</Text>
+      </SearchHeader>
+      <DeckList searchText={searchText}/>
       <AddButton />
     </View>
   );
@@ -38,19 +46,24 @@ const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: '#f5f5f5',
   },
-  headerContainer: {
+  headerRow: {
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'center', // Align items vertically in the center
   },
   headerTitle: {
     fontSize: 24,
     fontWeight: 'bold',
     color: '#333',
-    marginRight: 10,
+    marginRight: 10, // Add spacing between the app name and screen name
   },
   screenName: {
     fontSize: 18,
     color: '#555',
+  },
+  subtitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#333',
   },
 });
 

@@ -24,7 +24,7 @@ const EditDeckScreen = ({ route, navigation }) => {
   return (
     <View style={styles.container}>
       {/* Header */}
-      <SearchHeader outerStyle={styles.header} searchText={searchText} setSearchText={setSearchText}>
+      <SearchHeader outerStyle={styles.header} searchText={searchText} setSearchText={setSearchText} placehold={'Search cards...'}>
           <View style={styles.headerContent}>
             {isEditing ? (
               <TextInput
@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     color: '#333',
-    height: "100%"
+    paddingVertical: 0,
   },
   headerIcons: {
     flexDirection: 'row',
