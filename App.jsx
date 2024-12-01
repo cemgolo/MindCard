@@ -6,6 +6,7 @@ import { PersistGate } from 'redux-persist/integration/react'
 import HomeScreen from './screens/HomeScreen';
 import DeckDetailScreen from './screens/DeckDetailScreen';
 import StartScreen from './screens/StartScreen';
+import EditDeckScreen from './screens/EditDeckScreen';
 import ReviewRoundScreen from './screens/ReviewRoundScreen';
 import { deckStore, deckPersistor } from './storage/persist-storage';
 
@@ -21,6 +22,7 @@ const App = () => {
             <Stack.Screen name="Home" component={HomeScreen} />
             <Stack.Screen name="DeckDetail" component={DeckDetailScreen} options={({ route }) => ({ title: route.params?.deck?.name || 'Deck Detail' })} />
             <Stack.Screen name="StartScreen" component={StartScreen} options={({ route }) => ({ title: route.params?.deck?.name || 'Start Screen' })} />
+            <Stack.Screen name="EditDeckScreen" component={EditDeckScreen} options={({ route }) => ({ title: route.params?.deck?.name || 'Edit Deck Screen' })} />
             <Stack.Screen name="ReviewRoundScreen" component={ReviewRoundScreen} options={({ route }) => ({ title: route.params?.deck?.name || 'Review Round' })} />
           </Stack.Navigator>
         </NavigationContainer>
