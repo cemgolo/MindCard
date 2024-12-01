@@ -24,8 +24,8 @@ const DeckList = ({ searchText }) => {
 
   return (
     <FlatList
-      data={decks}
-      keyExtractor={(item, index) => index.toString()}
+      data={filteredDecks}
+      keyExtractor={(_, index) => index.toString()}
       renderItem={renderDeckItem}
       contentContainerStyle={styles.listContainer}
     />
