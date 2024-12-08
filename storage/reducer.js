@@ -1,25 +1,28 @@
 import { ADD_DECK } from "./actions";
+import { createCard } from "./helper";
+import uuid from 'react-native-uuid';
 
+/** @type import("./types").ReduxDeckState **/
 const initialState = {
     decks: [
         {
+            id: uuid.v4(),
             name: 'Fruit vocab',
             totalCards: 50,
             cardsPerRound: 10,
-            performance: { seen: 30, learned: 20, failed: 5, toReview: 5 },
             cards: [
-                { front: 'Apple', back: 'A red fruit' },
-                { front: 'Banana', back: 'A yellow fruit' },
+                createCard("Apple", "A red fruit."),
+                createCard("Banana", "A yellow fruit."),
             ]
         },
         {
+            id: uuid.v4(),
             name: 'Rocket science',
             totalCards: 80,
             cardsPerRound: 10,
-            performance: { seen: 40, learned: 30, failed: 10, toReview: 0 },
             cards: [
-                { front: 'Vectors', back: 'starts with V' },
-                { front: 'Rocket', back: 'starts with S' },
+                createCard("Vectors", "starts with V"),
+                createCard("Rocket", "starts with S"),
             ]
         }
     ]
