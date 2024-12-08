@@ -23,15 +23,15 @@ function createPieData(cards) {
 }
 
 const DeckDetailScreen = ({ route, navigation }) => {
-  const { deckId } = route.params;
-
-  const deck = useSelector(state => state.decks.find(deck => deck.id === deckId));
+  const { deckName } = route.params;
+  
+  const deck = useSelector(state => state.decks.find(deck => deck.name === deckName));
   const dueCards = deck.cards.filter(card => card.due <= new Date())
   console.log(dueCards);
 
   return (
     <View style={styles.container}>
-      <Text style={styles.deckName}>{deck.name}</Text>
+      <Text style={styles.deckName}>{deckName}</Text>
       <Text style={styles.detailText}>Total Cards: {deck.cards.length}</Text>
       <Text style={styles.detailText}>Cards Per Round: {deck.cardsPerRound || 10}</Text>
 

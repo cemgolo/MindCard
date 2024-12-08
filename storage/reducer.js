@@ -1,12 +1,10 @@
 import { ADD_DECK } from "./actions";
 import { createCard } from "./helper";
-import uuid from 'react-native-uuid';
 
 /** @type import("./types").ReduxDeckState **/
 const initialState = {
     decks: [
         {
-            id: uuid.v4(),
             name: 'Fruit vocab',
             cardsPerRound: 10,
             cards: [
@@ -15,7 +13,6 @@ const initialState = {
             ]
         },
         {
-            id: uuid.v4(),
             name: 'Rocket science',
             cardsPerRound: 10,
             cards: [
