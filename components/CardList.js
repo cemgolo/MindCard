@@ -1,33 +1,42 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, FlatList, Image } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { useSelector } from 'react-redux';
 
 const CardList = ({ searchText }) => {
   const navigation = useNavigation();
+  const route = useRoute();
 
-  // const cards = useSelector(state => state.cards);
-  
-  // Example static cards, you can replace this with your Redux state or API call
-  const cards = [
-    { id: '1', name: 'Card 1', /*image: require('../assets/card1.jpg')*/ },
-    { id: '2', name: 'Card 2', /*image: require('../assets/card2.jpg')*/ },
-    { id: '3', name: 'Card 3', /*image: require('../assets/card3.jpg')*/ },
-  ];
+  const { deck } = route.params;
 
-  // Filter cards based on the search text
-  const filteredCards = cards.filter(card =>
-    card.name.toLowerCase().includes(searchText.toLowerCase())
+  const cards = useSelector((state) => {
+    const selectedDeck = state.decks.find((d) => d.name === deck.name);
+    return selectedDeck ? selectedDeck.cards : [];
+  });
+
+  // useEffect(() => {
+  //   console.log(cards); // Debug the `cards` structure
+  // }, [cards]);
+
+  const validCards = cards.filter(card => card && card.frontDescription);
+  const filteredCards = validCards.filter(card =>
+    card.frontDescription.toLowerCase().includes(searchText.toLowerCase())
   );
 
   const handleCardPress = (card) => {
-    navigation.navigate('EditCard', { card });
+    navigation.navigate('EditCardScreen', { card });
   };
 
   const renderCardItem = ({ item }) => (
     <View style={styles.cardContainer}>
-      <Image source={item.image} style={styles.cardImage} />
-      <Text style={styles.cardText}>{item.name}</Text>
+      <Image
+        source={item.image ? { uri: item.image } : require('../assets/placeholder.jpg')}
+        style={styles.cardImage}
+      />
+      <Text style={styles.cardText}>
+        {item.frontDescription || ""}
+      </Text>
       <TouchableOpacity onPress={() => handleCardPress(item)}>
         <Icon
           name="edit"
@@ -37,12 +46,12 @@ const CardList = ({ searchText }) => {
       </TouchableOpacity>
     </View>
   );
+  
 
   return (
     <FlatList
       data={filteredCards}
       renderItem={renderCardItem}
-      keyExtractor={(item) => item.id}
       contentContainerStyle={styles.cardList}
     />
   );
@@ -73,4 +82,3 @@ const styles = StyleSheet.create({
 });
 
 export default CardList;
-

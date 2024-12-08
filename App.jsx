@@ -7,6 +7,7 @@ import HomeScreen from './screens/HomeScreen';
 import DeckDetailScreen from './screens/DeckDetailScreen';
 import { deckStore, deckPersistor } from './storage/persist-storage';
 import EditDeckScreen from './screens/EditDeckScreen';
+import EditCardScreen from './screens/EditCardScreen';
 
 const Stack = createStackNavigator();
 
@@ -19,6 +20,7 @@ const App = () => {
             <Stack.Screen name="Home" component={HomeScreen} />
             <Stack.Screen name="DeckDetail" component={DeckDetailScreen} options={({ route }) => ({ title: route.params.deck.name })} />
             <Stack.Screen name="EditDeckScreen" component={EditDeckScreen} options={{title: 'Edit Deck', }}/>
+            <Stack.Screen name="EditCardScreen" component={EditCardScreen} options={{title: 'Edit Card', }}/>
           </Stack.Navigator>
         </NavigationContainer>
       </PersistGate>
