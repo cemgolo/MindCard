@@ -9,13 +9,13 @@ const initialState = {
           performance: { seen: 30, learned: 20, failed: 5, toReview: 5 },
           cards: [
               {   
-                  id: '1', // Add unique ID
+                  id: '1',
                   frontDescription: 'Orange',
                   backDescription: 'A fruit rich in vitamin C.',
                   image: '/assets/orange.jpeg', 
               },
               {
-                  id: '2', // Add unique ID
+                  id: '2',
                   frontDescription: 'Apple',
                   backDescription: 'A fruit that keeps the doctor away.',
                   image: '/assets/apple.jpeg', 
