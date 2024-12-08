@@ -9,16 +9,15 @@ import {
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import CardList from '../components/CardList';
 import SearchHeader from '../components/SearchHeader';
-import { useSelector } from 'react-redux';
 
-const EditDeckScreen = ({ route }) => {
-  const { deckName } = route.params;
-  const deck = useSelector(state => state.decks.find(deck => deck.name === deckName));
-  const [newDeckName, setNewDeckName] = useState(deck.name); // State for deck name
+const EditDeckScreen = ({ route, navigation }) => {
+  const { deck } = route.params;
+  const [deckName, setDeckName] = useState(deck.name); // State for deck name
   const [isEditing, setIsEditing] = useState(false); // State for edit mode
   const [searchText, setSearchText] = useState(''); // State for search input
 
   const handleSave = () => {
+    console.log('Updated Deck Name:', deckName);
     setIsEditing(false); // Exit edit mode
   };
 
@@ -30,13 +29,13 @@ const EditDeckScreen = ({ route }) => {
             {isEditing ? (
               <TextInput
                 style={styles.deckNameInput}
-                value={newDeckName}
-                onChangeText={setNewDeckName}
+                value={deckName}
+                onChangeText={setDeckName}
                 autoFocus
                 onSubmitEditing={handleSave} // Save on pressing Enter
               />
             ) : (
-              <Text style={styles.deckName}>{newDeckName}</Text>
+              <Text style={styles.deckName}>{deckName}</Text>
             )}
             <View style={styles.headerIcons}>
               <TouchableOpacity onPress={() => setIsEditing(!isEditing)}>

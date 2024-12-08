@@ -1,31 +1,31 @@
 import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
-import { Rating } from "ts-fsrs";
 
 const RatingButtons = ({ onRate }) => {
-  const ratings = [
-    { label: 'Fail', action: Rating.Again, color: '#ff6666' },
-    { label: 'Slow', action: Rating.Hard, color: '#ffd966' },
-    { label: 'Average', action: Rating.Good, color: '#00bbff' },
-    { label: 'Fast', action: Rating.Easy, color: '#66cc66' }
-  ];
-
-  return (
-    <View style={styles.ratingContainer}>
-      <Text style={styles.ratingTitle}>Rate your recall performance</Text>
-      <View style={styles.ratingButtons}>
-        {ratings.map(rating => 
-          <TouchableOpacity key={rating.label} style={[styles.button, {backgroundColor: rating.color}]} onPress={() => onRate(rating.action)}>
-            <Text style={styles.buttonText}>{rating.label}</Text>
-          </TouchableOpacity>
-        )}
-      </View>
-    </View>
-  )
+    return (
+        <View style={styles.ratingContainer}>
+          <Text style={styles.ratingTitle}>Rate your recall performance</Text>
+          <View style={styles.ratingButtons}>
+            <TouchableOpacity style={styles.failButton} onPress={onRate}>
+              <Text style={styles.buttonText}>Fail</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.slowButton} onPress={onRate}>
+              <Text style={styles.buttonText}>Slow</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.averageButton} onPress={onRate}>
+              <Text style={styles.buttonText}>Average</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.fastButton} onPress={onRate}>
+              <Text style={styles.buttonText}>Fast</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+    )
 };
 
 const styles = StyleSheet.create({
-  ratingContainer: {
+
+ratingContainer: {
     marginTop: 20,
     alignItems: 'center',
   },
@@ -38,10 +38,35 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     width: '80%',
   },
-  button: {
+  failButton: {
     width: 80, 
     height: 40, 
     padding: 10,
+    backgroundColor: '#ff6666',
+    borderRadius: 5,
+    marginHorizontal: 3,  
+  },
+  slowButton: {
+    width: 80, 
+    height: 40, 
+    padding: 10,
+    backgroundColor: '#ffd966',
+    borderRadius: 5,
+    marginHorizontal: 3,  
+  },
+  averageButton: {
+    width: 80, 
+    height: 40, 
+    padding: 10,
+    backgroundColor: '#00bbff',
+    borderRadius: 5,
+    marginHorizontal: 3,  
+  },
+  fastButton: {
+    width: 80, 
+    height: 40, 
+    padding: 10,
+    backgroundColor: '#66cc66',
     borderRadius: 5,
     marginHorizontal: 3,  
   },

@@ -13,7 +13,7 @@ const DeckList = ({ searchText }) => {
   );
 
   const handleDeckPress = (deck) => {
-    navigation.navigate('DeckDetail', { deckName: deck.name });
+    navigation.navigate('DeckDetail', { deck });
   };
 
   const renderDeckItem = ({ item }) => (

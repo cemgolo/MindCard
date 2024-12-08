@@ -6,7 +6,7 @@ const FlashCard = ({ front, back, flipped, onFlip, onRate }) => {
   return (
     <View style={styles.cardContainer}>
       <View style={styles.card}>
-        <Text style={styles.cardText}>{flipped ? back.text : front.text}</Text>
+        <Text style={styles.cardText}>{flipped ? back : front}</Text>
       </View>
       {!flipped ? (
         <TouchableOpacity style={styles.flipButton} onPress={onFlip}>
