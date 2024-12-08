@@ -30,7 +30,6 @@ const DeckDetailScreen = ({ route, navigation }) => {
     <View style={styles.container}>
       <Text style={styles.deckName}>{deckName}</Text>
       <Text style={styles.detailText}>Total Cards: {deck.cards.length}</Text>
-      <Text style={styles.detailText}>Cards Per Round: {deck.cardsPerRound || 10}</Text>
 
       {/* Pie Chart Component */}
       <PieChart data={createPieData(deck.cards)} />
