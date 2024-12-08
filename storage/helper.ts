@@ -14,4 +14,9 @@ function createCard(
     }
 }
 
-export { createCard }
+function isDue(card: FlashCard) {
+    const dueDate = typeof card.due === "string" ? Date.parse(card.due) : card.due;
+    return dueDate <= new Date();
+}
+
+export { createCard, isDue }
