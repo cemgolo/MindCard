@@ -1,10 +1,15 @@
+import { State } from "ts-fsrs";
 import { ADD_DECK } from "./actions";
 import { createCard } from "./helper";
 
 /** @type import("./types").FlashCardDeck **/
 const defaultDeckOptions = {
-    maxReviewCards: 15,
-    maxNewCards: 5
+    maxCardsEverySession: {
+        [State.New]:        5,
+        [State.Learning]:   Infinity,
+        [State.Review]:     20,
+        [State.Relearning]: Infinity
+    }
 };
 
 /** @type import("./types").ReduxDeckState **/
