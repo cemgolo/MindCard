@@ -24,10 +24,7 @@ function createPieData(cards) {
 
 const DeckDetailScreen = ({ route, navigation }) => {
   const { deckName } = route.params;
-  
   const deck = useSelector(state => state.decks.find(deck => deck.name === deckName));
-  const dueCards = deck.cards.filter(card => card.due <= new Date())
-  console.log(dueCards);
 
   return (
     <View style={styles.container}>
