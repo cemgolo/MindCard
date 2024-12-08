@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import FlashCard from '../components/FlashCard';
 
-const StartScreen = ({ route, navigation }) => {
+const ReviewSessionScreen = ({ route, navigation }) => {
   const { deck } = route.params;
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
   const [flipped, setFlipped] = useState(false); // Manage flipped state here
@@ -63,4 +63,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default StartScreen;
+export default ReviewSessionScreen;
