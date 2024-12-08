@@ -42,7 +42,7 @@ const DeckDetailScreen = ({ route, navigation }) => {
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           style={[buttonStyles.secondary, { flex: 1 }]}
-          onPress={() => navigation.navigate('EditDeckScreen', { deck: deck, })}>
+          onPress={() => navigation.navigate('EditDeckScreen', { deckName: deckName, })}>
           <Text style={buttonStyles.secondaryText}>Edit</Text>
         </TouchableOpacity>
         <TouchableOpacity style={[buttonStyles.primary, {flex: 3}]} onPress={() => navigation.navigate('StartScreen', { deck })}>
