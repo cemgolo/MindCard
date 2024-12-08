@@ -23,13 +23,12 @@ interface FlashCard extends Card {
 
 interface FlashCardDeck {
     name: string;
-    totalCards: number;
     cardsPerRound: number;
-    cards: FlashCard[]
+    cards: FlashCard[];
 }
 
 interface ReduxDeckState {
-    decks: FlashCardDeck[]
+    decks: FlashCardDeck[];
 }
 
 export { FlashCardSide, FlashCard, FlashCardDeck, ReduxDeckState }

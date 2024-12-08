@@ -8,7 +8,6 @@ const initialState = {
         {
             id: uuid.v4(),
             name: 'Fruit vocab',
-            totalCards: 50,
             cardsPerRound: 10,
             cards: [
                 createCard("Apple", "A red fruit."),
@@ -18,7 +17,6 @@ const initialState = {
         {
             id: uuid.v4(),
             name: 'Rocket science',
-            totalCards: 80,
             cardsPerRound: 10,
             cards: [
                 createCard("Vectors", "starts with V"),
