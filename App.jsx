@@ -7,7 +7,7 @@ import HomeScreen from './screens/HomeScreen';
 import DeckDetailScreen from './screens/DeckDetailScreen';
 import ReviewSessionScreen from './screens/ReviewSessionScreen';
 import EditDeckScreen from './screens/EditDeckScreen';
-import ReviewRoundScreen from './screens/ReviewRoundScreen';
+import ReviewSessionEndScreen from './screens/ReviewSessionResultsScreen';
 import { deckStore, deckPersistor } from './storage/persist-storage';
 
 const Stack = createStackNavigator();
@@ -23,7 +23,7 @@ const App = () => {
             <Stack.Screen name="DeckDetail" component={DeckDetailScreen} options={useDeckNameAsTitle} />
             <Stack.Screen name="ReviewSessionScreen" component={ReviewSessionScreen} options={useDeckNameAsTitle} />
             <Stack.Screen name="EditDeckScreen" component={EditDeckScreen} options={useDeckNameAsTitle} />
-            <Stack.Screen name="ReviewRoundScreen" component={ReviewRoundScreen} options={useDeckNameAsTitle} />
+            <Stack.Screen name="ReviewSessionEndScreen" component={ReviewSessionEndScreen} options={useDeckNameAsTitle} />
           </Stack.Navigator>
         </NavigationContainer>
       </PersistGate>

@@ -20,7 +20,7 @@ const ReviewSessionScreen = ({ route, navigation }) => {
       setCurrentCardIndex(currentCardIndex + 1);
       setFlipped(false); // Reset flipped state when moving to the next card
     } else {
-      navigation.navigate('ReviewRoundScreen', { performanceData: [0.4, 0, 0.2, 0], deck });
+      navigation.navigate('ReviewSessionEndScreen', { performanceData: [0.4, 0, 0.2, 0], deck });
     }
   };
 
