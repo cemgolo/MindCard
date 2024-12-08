@@ -1,20 +1,26 @@
 import { ADD_DECK } from "./actions";
 import { createCard } from "./helper";
 
+/** @type import("./types").FlashCardDeck **/
+const defaultDeckOptions = {
+    maxReviewCards: 15,
+    maxNewCards: 5
+};
+
 /** @type import("./types").ReduxDeckState **/
 const initialState = {
     decks: [
         {
+            ...defaultDeckOptions,
             name: 'Fruit vocab',
-            cardsPerRound: 10,
             cards: [
                 createCard("Apple", "A red fruit."),
                 createCard("Banana", "A yellow fruit."),
             ]
         },
         {
+            ...defaultDeckOptions,
             name: 'Rocket science',
-            cardsPerRound: 10,
             cards: [
                 createCard("Vectors", "starts with V"),
                 createCard("Rocket", "starts with S"),

@@ -23,7 +23,8 @@ interface FlashCard extends Card {
 
 interface FlashCardDeck {
     name: string;
-    cardsPerRound: number;
+    maxReviewCards: number;
+    maxNewCards: number;
     cards: FlashCard[];
 }
 
