@@ -2,33 +2,32 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import PieChart from '../components/PieChart';
 import buttonStyles from '../styles/buttons';
+import { State } from 'ts-fsrs';
+import { useSelector } from 'react-redux';
+
+function createPieData(cards) {
+  const STATES = [
+    { name: "New", color: "blue" },
+    { name: "Learning", color: "green" },
+    { name: "Review", color: "yellow" },
+    { name: "Relearning", color: "red" }
+  ];
+
+  return STATES.map(state => ({
+    name: state.name,
+    count: cards.filter(card => card.state === State[state.name]).length,
+    color: state.color,
+    legendFontColor: "#333",
+    legendFontSize: 14
+  }));
+}
 
 const DeckDetailScreen = ({ route, navigation }) => {
-  const { deck } = route.params;
+  const { deckId } = route.params;
 
-  const pieData = [
-        {
-          name: 'Failed',
-          count: deck.performance.failed,
-          color: 'red',
-          legendFontColor: '#333',
-          legendFontSize: 14,
-        },
-        {
-          name: 'Learned',
-          count: deck.performance.learned,
-          color: 'green',
-          legendFontColor: '#333',
-          legendFontSize: 14,
-        },
-        {
-          name: 'To Review',
-          count: deck.performance.toReview,
-          color: 'yellow',
-          legendFontColor: '#333',
-          legendFontSize: 14,
-        },
-      ]
+  const deck = useSelector(state => state.decks.find(deck => deck.id === deckId));
+  const dueCards = deck.cards.filter(card => card.due <= new Date())
+  console.log(dueCards);
 
   return (
     <View style={styles.container}>
@@ -37,7 +36,7 @@ const DeckDetailScreen = ({ route, navigation }) => {
       <Text style={styles.detailText}>Cards Per Round: {deck.cardsPerRound || 10}</Text>
 
       {/* Pie Chart Component */}
-      <PieChart data={pieData} />
+      <PieChart data={createPieData(deck.cards)} />
 
       {/* Buttons */}
       <View style={styles.buttonContainer}>
