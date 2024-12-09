@@ -2,10 +2,10 @@ import React from 'react';
 import { PieChart as RNMPieChart } from 'react-native-chart-kit';
 import { Dimensions, View, Text, StyleSheet } from 'react-native';
 
-const PieChart = ({ data }) => {
+const PieChart = ({ data, title = "Performance Overview" }) => {
   return (
     <View style={styles.chartContainer}>
-      <Text style={styles.chartTitle}>Performance Overview</Text>
+      <Text style={styles.chartTitle}>{title}</Text>
       <RNMPieChart
         data={data}
         width={Dimensions.get('window').width - 40} // Chart width (screen width minus some padding)

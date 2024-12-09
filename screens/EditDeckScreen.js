@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import CardList from '../components/CardList';
-import SearchHeader from '../components/SearchHeader';
+import SearchHeader from '../components/wrappers/SearchHeader';
 import { useSelector } from 'react-redux';
 
 const EditDeckScreen = ({ route }) => {

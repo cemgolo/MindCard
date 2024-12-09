@@ -5,7 +5,7 @@ import buttonStyles from '../styles/buttons';
 import { State } from 'ts-fsrs';
 import { useSelector } from 'react-redux';
 import { isDue } from '../storage/helper';
-import Dialog from '../components/Dialog';
+import Dialog from '../components/wrappers/Dialog';
 
 function createPieData(cards) {
   const STATES = [
