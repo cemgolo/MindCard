@@ -2,26 +2,23 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import FlashCard from '../components/FlashCard';
 import { useDispatch, useSelector } from 'react-redux';
-import { FSRS, State } from 'ts-fsrs';
+import { FSRS } from 'ts-fsrs';
 import { isDue } from '../storage/helper';
 import { updateCard } from '../storage/actions';
 import { randomObjectValue } from '../scripts/arrays';
 
 const ReviewSessionScreen = ({ route, navigation }) => {
-  const { deckName } = route.params;
+  const { deckName, fromDate } = route.params;
   const deck = useSelector(state => state.decks.find(deck => deck.name === deckName));
   const [sessionCards, setSessionCards] = useState(
     deck.cards
-      .filter(isDue)
+      .filter(card => isDue(card, fromDate))
       .reduce((obj, card) => {
         if (!(card.state in obj)) obj[card.state] = [];
         if (obj[card.state].length < deck.maxCardsEverySession[card.state]) obj[card.state].push(card);
         return obj;
       }, {})
-  )
-
-  const [currentCard, setCurrentCard] = useState(pickRandomCard());
-  const [flipped, setFlipped] = useState(false); // Manage flipped state here
+  );
 
   const fsrs = new FSRS();
   const dispatch = useDispatch();
@@ -41,6 +38,9 @@ const ReviewSessionScreen = ({ route, navigation }) => {
     sessionCards[card.state].push(card)
     setSessionCards(sessionCards);
   }
+
+  const [currentCard, setCurrentCard] = useState(pickRandomCard());
+  const [flipped, setFlipped] = useState(false); // Manage flipped state here
 
   if (!deck.cards || deck.cards.length === 0) {
     return (
