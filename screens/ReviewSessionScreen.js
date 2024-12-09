@@ -42,14 +42,6 @@ const ReviewSessionScreen = ({ route, navigation }) => {
   const [currentCard, setCurrentCard] = useState(pickRandomCard());
   const [flipped, setFlipped] = useState(false); // Manage flipped state here
 
-  if (!deck.cards || deck.cards.length === 0) {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.title}>No cards available for this deck.</Text>
-      </View>
-    );
-  }
-
   const handleRating = (rating) => {
     removeCardFromSession(currentCard);
     const newCard = fsrs.repeat(currentCard, new Date())[rating].card;
