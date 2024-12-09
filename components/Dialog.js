@@ -2,10 +2,11 @@ import { TouchableOpacity, View, Text, StyleSheet } from "react-native";
 import Modal from "react-native-modal";
 import buttonStyles from "../styles/buttons";
 
-const Dialog = ({ children, isOpen, title = "Unnamed Dialog", confirmLabel = "Confirm", onConfirm, onCancel }) => {
+const Dialog = ({ children, isOpen, emoji = "", title = "Unnamed Dialog", confirmLabel = "Confirm", onConfirm, onCancel }) => {
     return (
         <Modal isVisible={isOpen} animationIn={"fadeInUp"} animationOut={"fadeOutDown"} backdropTransitionOutTiming={-1}>
             <View style={styles.contentContainer}>
+                {emoji && <Text style={styles.emoji}>{emoji}</Text>}
                 <Text style={styles.title}>{title}</Text>
                 {children}
                 <ButtonContainer confirmLabel={confirmLabel} onConfirm={onConfirm} onCancel={onCancel} />
@@ -42,6 +43,10 @@ const styles = StyleSheet.create({
       width: '80%',
       alignItems: 'center',
       margin: 'auto'
+    },
+    emoji: {
+        fontSize: 40,
+        marginBottom: 20
     },
     title: {
       fontSize: 20,
