@@ -12,7 +12,7 @@ const ReviewSessionScreen = ({ route, navigation }) => {
   const deck = useSelector(state => state.decks.find(deck => deck.name === deckName));
   const [sessionCards, setSessionCards] = useState(
     deck.cards
-      .filter(isDue)
+      .filter(card => isDue(card) || card.state === State.Learning)
       .reduce((obj, card) => {
         if (!(card.state in obj)) obj[card.state] = [];
         if (obj[card.state].length < deck.maxCardsEverySession[card.state]) obj[card.state].push(card);
