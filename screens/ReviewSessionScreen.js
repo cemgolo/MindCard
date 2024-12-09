@@ -5,12 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { FSRS, State } from 'ts-fsrs';
 import { isDue } from '../storage/helper';
 import { updateCard } from '../storage/actions';
-
-// https://stackoverflow.com/a/15106541
-const randomObjectValue = (obj) => {
-  const keys = Object.keys(obj);
-  return obj[keys[keys.length * Math.random() << 0]];
-};
+import { randomObjectValue } from '../scripts/arrays';
 
 const ReviewSessionScreen = ({ route, navigation }) => {
   const { deckName } = route.params;
