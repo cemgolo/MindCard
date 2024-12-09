@@ -6,7 +6,7 @@ import buttonStyles from '../styles/buttons';
 
 const screenWidth = Dimensions.get('window').width;
 
-const ReviewRoundScreen = ({ navigation, route }) => {
+const ReviewSessionEndScreen = ({ navigation, route }) => {
   const { performanceData, deck } = route.params;
 
   const data = {
@@ -70,4 +70,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ReviewRoundScreen;
+export default ReviewSessionEndScreen;
