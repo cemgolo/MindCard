@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import FlashCard from '../components/FlashCard';
-import { useSelector } from 'react-redux';
-import { FSRS, Rating, State } from 'ts-fsrs';
+import { useDispatch, useSelector } from 'react-redux';
+import { FSRS, State } from 'ts-fsrs';
 import { isDue } from '../storage/helper';
+import { updateCard } from '../storage/actions';
 
 // https://stackoverflow.com/a/15106541
 const randomObjectValue = (obj) => {
@@ -23,14 +24,16 @@ const ReviewSessionScreen = ({ route, navigation }) => {
         return obj;
       }, {})
   )
+
   const fsrs = new FSRS();
+  const dispatch = useDispatch();
   
   const pickRandomCard = () => {
     const cardsOfRandomState = randomObjectValue(sessionCards);
     return cardsOfRandomState[Math.floor(Math.random() * cardsOfRandomState.length)];
   }
   const removeCardFromSession = (card) => {
-    const cardIndex = sessionCards[card.state].findIndex(item => item.name === card.name);
+    const cardIndex = sessionCards[card.state].findIndex(item => item.uuid === card.uuid);
     sessionCards[card.state].splice(cardIndex, 1);
     if (sessionCards[card.state].length === 0) delete sessionCards[card.state];
     setSessionCards(sessionCards);
@@ -55,6 +58,7 @@ const ReviewSessionScreen = ({ route, navigation }) => {
   const handleRating = (rating) => {
     removeCardFromSession(currentCard);
     const newCard = fsrs.repeat(currentCard, new Date())[rating].card;
+    dispatch(updateCard(newCard));
     if (newCard.state === State.Learning || isDue(newCard)) addCardToSession(newCard);
 
     if (Object.keys(sessionCards).length > 0) {

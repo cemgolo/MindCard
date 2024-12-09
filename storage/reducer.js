@@ -1,4 +1,4 @@
-import { ADD_DECK, ADD_EMPTY_DECK, EDIT_DECK } from "./actions";
+import { ADD_DECK, ADD_EMPTY_DECK, UPDATE_CARD } from "./actions";
 import { createCard, createDeck } from "./helper";
 
 /** @type import("./types").ReduxDeckState **/
@@ -28,6 +28,18 @@ const deckReducer = (state = initialState, action) => {
             return {
                 ...state,
                 decks: [ ...state.decks, createDeck(action.payload) ]
+            }
+        }
+
+        case UPDATE_CARD: {
+            return {
+                ...state,
+                decks: state.decks.map(deck => ({
+                    ...deck,
+                    cards: deck.cards.map(card =>
+                        card.uuid === action.payload.uuid ? action.payload : card
+                    )
+                }))
             }
         }
 
