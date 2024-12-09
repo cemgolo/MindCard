@@ -23,6 +23,7 @@ const App = () => {
             <Stack.Screen name="DeckDetail" component={DeckDetailScreen} options={({ route }) => ({ title: route.params?.deck?.name || 'Deck Detail' })} />
             <Stack.Screen name="StartScreen" component={StartScreen} options={({ route }) => ({ title: route.params?.deck?.name || 'Start Screen' })} />
             <Stack.Screen name="EditDeckScreen" component={EditDeckScreen} options={({ route }) => ({ title: route.params?.deck?.name || 'Edit Deck Screen' })} />
+            <Stack.Screen name="EditCardScreen" component={EditCardScreen} options={({route}) => ({title: route.params?.deck?.name || 'Edit Card Screen' })} />
             <Stack.Screen name="ReviewRoundScreen" component={ReviewRoundScreen} options={({ route }) => ({ title: route.params?.deck?.name || 'Review Round' })} />
 
           </Stack.Navigator>
