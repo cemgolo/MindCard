@@ -1,5 +1,6 @@
 import { createEmptyCard, State } from "ts-fsrs";
 import { FlashCard, FlashCardDeck, FlashCardSide } from "./types";
+import uuid from "react-native-uuid";
 
 function createCard(
     front: FlashCardSide | string,
@@ -7,6 +8,7 @@ function createCard(
 ): FlashCard {
     return {
         ...createEmptyCard(),
+        uuid: uuid.v4(),
         content: {
             front: typeof front === "string" ? { text: front } : front,
             back: typeof back === "string" ? { text: back } : back,

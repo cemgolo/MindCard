@@ -15,6 +15,7 @@ type FlashCardSide = RequireAtLeastOne<{
 }>
 
 interface FlashCard extends Card {
+    uuid: string;
     content: {
         front: FlashCardSide;
         back: FlashCardSide;
