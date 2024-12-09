@@ -31,7 +31,7 @@ function createDeck(name: string, cards: FlashCard[] = []): FlashCardDeck {
 
 function isDue(card: FlashCard): boolean {
     const dueDate = typeof card.due === "string" ? Date.parse(card.due) : card.due;
-    return dueDate <= new Date();
+    return card.state === State.Learning || dueDate <= new Date();
 }
 
 export { createCard, createDeck, isDue }

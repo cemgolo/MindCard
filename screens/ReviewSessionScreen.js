@@ -12,13 +12,16 @@ const ReviewSessionScreen = ({ route, navigation }) => {
   const deck = useSelector(state => state.decks.find(deck => deck.name === deckName));
   const [sessionCards, setSessionCards] = useState(
     deck.cards
-      .filter(card => isDue(card) || card.state === State.Learning)
+      .filter(isDue)
       .reduce((obj, card) => {
         if (!(card.state in obj)) obj[card.state] = [];
         if (obj[card.state].length < deck.maxCardsEverySession[card.state]) obj[card.state].push(card);
         return obj;
       }, {})
   )
+
+  const [currentCard, setCurrentCard] = useState(pickRandomCard());
+  const [flipped, setFlipped] = useState(false); // Manage flipped state here
 
   const fsrs = new FSRS();
   const dispatch = useDispatch();
@@ -39,9 +42,6 @@ const ReviewSessionScreen = ({ route, navigation }) => {
     setSessionCards(sessionCards);
   }
 
-  const [currentCard, setCurrentCard] = useState(pickRandomCard());
-  const [flipped, setFlipped] = useState(false); // Manage flipped state here
-
   if (!deck.cards || deck.cards.length === 0) {
     return (
       <View style={styles.container}>
@@ -54,13 +54,13 @@ const ReviewSessionScreen = ({ route, navigation }) => {
     removeCardFromSession(currentCard);
     const newCard = fsrs.repeat(currentCard, new Date())[rating].card;
     dispatch(updateCard(newCard));
-    if (newCard.state === State.Learning || isDue(newCard)) addCardToSession(newCard);
+    if (isDue(newCard)) addCardToSession(newCard);
 
     if (Object.keys(sessionCards).length > 0) {
       setCurrentCard(pickRandomCard());
       setFlipped(false); // Reset flipped state when moving to the next card
     } else {
-      navigation.navigate('ReviewSessionEndScreen', { performanceData: [0.4, 0, 0.2, 0], deck });
+      navigation.navigate('ReviewSessionEndScreen', { deckName,  });
     }
   };
 
