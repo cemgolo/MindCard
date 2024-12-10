@@ -2,7 +2,7 @@ import { cardStateColors } from "../storage/helper";
 import { State } from "ts-fsrs";
 import PieChart from "./PieChart";
 
-const CardStatesPieChart = ({ cards }) => {
+const CardStatesPieChart = ({ cards, title = "Cards to study today", height }) => {
     const data = Object.entries(cardStateColors).map(([state, stateColor]) => ({
         name: State[state],
         count: cards[state]?.filter(card => card.state == state).length ?? 0,
@@ -12,7 +12,7 @@ const CardStatesPieChart = ({ cards }) => {
       }));
 
     return (
-        <PieChart data={data} title='Cards to study today' />
+        <PieChart data={data} title={title} height={height} />
     );
 };
 

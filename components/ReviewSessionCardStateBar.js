@@ -2,6 +2,7 @@ import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { State } from "ts-fsrs";
 import { cardStateColors } from "../storage/helper";
 import { useState } from "react";
+import CardStatesPieChart from "./CardStatesPieChart";
 
 const ReviewSessionCardStateBar = ({ sessionCards }) => {
     const stateCounts = [State.New, State.Learning, State.Review, State.Relearning]
@@ -11,14 +12,17 @@ const ReviewSessionCardStateBar = ({ sessionCards }) => {
 
     return (
         <TouchableOpacity style={[styles.flexRow, styles.container]} onPress={() => setIsExpanded(!isExpanded)}>
-            {Object.entries(stateCounts).map(([state, cardCount]) =>
-                <View key={state} style={[styles.flexRow, styles.cardStateInfo, isExpanded && {width: '50%'}]}>
-                    <View style={[styles.color, {backgroundColor: cardStateColors[state]}]} />
-                    {isExpanded && <Text>{State[state]}:</Text>}
-                    <Text>{cardCount}</Text>
-                </View>
-            )}
-            <Text style={{marginLeft: 'auto'}}>{isExpanded ? '-' : '⋯'}</Text>
+            {isExpanded
+                ? <CardStatesPieChart cards={sessionCards} title="" height={140} />
+                : Object.entries(stateCounts).map(([state, cardCount]) =>
+                    <View key={state} style={[styles.flexRow, styles.cardStateInfo, isExpanded && {width: '50%'}]}>
+                        <View style={[styles.color, {backgroundColor: cardStateColors[state]}]} />
+                        {isExpanded && <Text>{State[state]}:</Text>}
+                        <Text>{cardCount}</Text>
+                    </View>
+                )
+            }
+            <Text style={styles.expandIcon}>{isExpanded ? '-' : '⋯'}</Text>
         </TouchableOpacity>
     )
 };
@@ -43,6 +47,11 @@ const styles = StyleSheet.create({
         height: 10,
         borderRadius: 10,
         marginRight: 3
+    },
+    expandIcon: {
+        position: 'absolute',
+        right: 10,
+        top: 10,
     }
 });
 
