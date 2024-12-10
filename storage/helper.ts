@@ -61,4 +61,11 @@ const cardReviewRatings = [
     { label: 'Fast', action: Rating.Easy, color: '#66cc66' }
 ];
 
-export { createCard, createDeck, isDue, generateSessionCards, cardReviewRatings }
+const cardStateColors = {
+    [State.New]: "blue",
+    [State.Learning]: "green",
+    [State.Review]: "yellow",
+    [State.Relearning]: "red"
+};
+
+export { createCard, createDeck, isDue, generateSessionCards, cardReviewRatings, cardStateColors }

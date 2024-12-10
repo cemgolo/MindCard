@@ -4,21 +4,14 @@ import PieChart from '../components/PieChart';
 import buttonStyles from '../styles/buttons';
 import { State } from 'ts-fsrs';
 import { useSelector } from 'react-redux';
-import { generateSessionCards, isDue } from '../storage/helper';
+import { cardStateColors, generateSessionCards, isDue } from '../storage/helper';
 import ReviewInAdvanceDialog from '../components/dialogs/ReviewInAdvanceDialog';
 
 function createPieData(sessionCards) {
-  const STATES = [
-    { name: "New", color: "blue" },
-    { name: "Learning", color: "green" },
-    { name: "Review", color: "yellow" },
-    { name: "Relearning", color: "red" }
-  ];
-
-  return STATES.map((state, i) => ({
-    name: state.name,
-    count: sessionCards[i]?.filter(card => isDue(card) && card.state === State[state.name]).length ?? 0,
-    color: state.color,
+  return Object.entries(cardStateColors).map(([state, stateColor]) => ({
+    name: State[state],
+    count: sessionCards[state]?.filter(card => isDue(card) && card.state == state).length ?? 0,
+    color: stateColor,
     legendFontColor: "#333",
     legendFontSize: 14
   }));
