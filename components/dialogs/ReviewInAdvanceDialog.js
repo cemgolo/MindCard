@@ -1,11 +1,12 @@
 import { useDispatch } from "react-redux";
-import { addEmptyDeck } from "../../storage/actions";
 import { useState } from "react";
-import { StyleSheet, Text, TextInput } from "react-native";
+import { StyleSheet, Text, TextInput, View } from "react-native";
 import Dialog from "./Dialog";
 
 const ReviewInAdvanceDialog = ({ isOpen, onClose, deck }) => {
   const [deckName, setDeckName] = useState('');
+  const [advanceDays, setAdvanceDays] = useState(1);
+  const [advanceDaysError, setAdvanceDaysError] = useState("");
   const dispatch = useDispatch();
 
   const confirmLearnInAdvance = () => {

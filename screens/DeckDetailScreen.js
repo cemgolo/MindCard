@@ -53,8 +53,6 @@ const DeckDetailScreen = ({ route, navigation }) => {
   const sessionCards = generateSessionCards(deck);
 
   const [isPopupVisible, setIsPopupVisible] = useState(false);
-  const [advanceDays, setAdvanceDays] = useState(1);
-  const [advanceDaysError, setAdvanceDaysError] = useState("");
 
   const start = () => {
     if (Object.keys(sessionCards).length > 0) {
