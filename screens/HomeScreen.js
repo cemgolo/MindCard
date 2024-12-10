@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import DeckList from '../components/DeckList';
 import StatusBar from '../components/StatusBar';
 import AddButton from '../components/AddButton';
-import SearchHeader from '../components/wrappers/SearchHeader';
+import SearchHeader from '../components/SearchHeader';
 
 const HomeScreen = () => {
   const navigation = useNavigation();

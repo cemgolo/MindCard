@@ -5,9 +5,32 @@ import buttonStyles from '../styles/buttons';
 import { State } from 'ts-fsrs';
 import { useSelector } from 'react-redux';
 import { isDue } from '../storage/helper';
-import Dialog from '../components/wrappers/Dialog';
+import Dialog from '../components/dialogs/Dialog';
+import ReviewInAdvanceDialog from '../components/dialogs/ReviewInAdvanceDialog';
 
-function createPieData(cards) {
+function generateSessionCards(deck, fromDate) {
+  let newCardCount = 0;
+  return deck.cards
+    .filter(card => {
+      if (card.state === State.New) {
+        if (newCardCount < deck.newCardsPerDay - deck.newCardsSeenToday) {
+          newCardCount++;
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        return isDue(card, fromDate)
+      }
+    })
+    .reduce((obj, card) => {
+      if (!(card.state in obj)) obj[card.state] = [];
+      obj[card.state].push(card);
+      return obj;
+    }, {});
+}
+
+function createPieData(sessionCards) {
   const STATES = [
     { name: "New", color: "blue" },
     { name: "Learning", color: "green" },
@@ -15,9 +38,9 @@ function createPieData(cards) {
     { name: "Relearning", color: "red" }
   ];
 
-  return STATES.map(state => ({
+  return STATES.map((state, i) => ({
     name: state.name,
-    count: cards.filter(card => card.state === State[state.name]).length,
+    count: sessionCards[i]?.filter(card => isDue(card) && card.state === State[state.name]).length ?? 0,
     color: state.color,
     legendFontColor: "#333",
     legendFontSize: 14
@@ -27,33 +50,17 @@ function createPieData(cards) {
 const DeckDetailScreen = ({ route, navigation }) => {
   const { deckName } = route.params;
   const deck = useSelector(state => state.decks.find(deck => deck.name === deckName));
-  
+  const sessionCards = generateSessionCards(deck);
+
   const [isPopupVisible, setIsPopupVisible] = useState(false);
   const [advanceDays, setAdvanceDays] = useState(1);
   const [advanceDaysError, setAdvanceDaysError] = useState("");
 
   const start = () => {
-    if (deck.cards.some(isDue)) {
-      navigation.navigate('ReviewSessionScreen', { deckName });
+    if (Object.keys(sessionCards).length > 0) {
+      navigation.navigate('ReviewSessionScreen', { deckName, initialSessionCards: sessionCards });
     } else {
       setIsPopupVisible(true);
-    }
-  }
-
-  const confirmLearnInAdvance = () => {
-    const advanceDaysNum = advanceDays === "" ? 1 : parseInt(advanceDays);
-    if (isNaN(advanceDaysNum)) {
-      setAdvanceDaysError("Please enter a valid number.");
-      return;
-    }
-
-    const date = new Date();
-    date.setDate(date.getDate() + advanceDaysNum);
-    
-    if (deck.cards.some(card => isDue(card, date))) {
-      navigation.navigate('ReviewSessionScreen', { deckName, fromDate: date });
-    } else {
-      setAdvanceDaysError("No cards are due until then. Please increase the time window.");
     }
   }
 
@@ -63,7 +70,7 @@ const DeckDetailScreen = ({ route, navigation }) => {
       <Text style={styles.detailText}>Total Cards: {deck.cards.length}</Text>
 
       {/* Pie Chart Component */}
-      <PieChart data={createPieData(deck.cards)} />
+      <PieChart data={createPieData(sessionCards)} title='Cards to study today' />
 
       {/* Buttons */}
       <View style={styles.buttonContainer}>
@@ -76,28 +83,7 @@ const DeckDetailScreen = ({ route, navigation }) => {
           <Text style={buttonStyles.primaryText}>Start</Text>
         </TouchableOpacity>
       </View>
-
-      <Dialog
-        emoji="🎉"
-        title="No cards are due!"
-        isOpen={isPopupVisible}
-        onCancel={() => { setIsPopupVisible(false); setAdvanceDaysError("") }}
-        onConfirm={confirmLearnInAdvance}
-      >
-        <Text style={{textAlign: 'center'}}>You've learned all of the cards in this deck for now. Would you like to learn in advance?</Text>
-        <View style={styles.daysInAdvanceContainer}>
-          <Text>Learn</Text>
-          <TextInput
-            style={styles.input}
-            keyboardType='numeric'
-            placeholder="1"
-            value={advanceDays}
-            onChangeText={setAdvanceDays}
-          />
-          <Text>day(s) in advance</Text>
-        </View>
-        {advanceDaysError && <Text style={styles.advanceDaysError}>{advanceDaysError}</Text>}
-      </Dialog>
+      <ReviewInAdvanceDialog />
     </View>
   );
 };
@@ -125,23 +111,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     gap: 5,
     margin: 50,
-  },
-  daysInAdvanceContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 8,
-    padding: 10,
-    margin: 10
-  },
-  advanceDaysError: {
-    color: 'red',
-    marginBottom: 20
   }
 });
 

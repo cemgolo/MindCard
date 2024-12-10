@@ -8,17 +8,9 @@ import { updateCard } from '../storage/actions';
 import { randomObjectValue } from '../scripts/arrays';
 
 const ReviewSessionScreen = ({ route, navigation }) => {
-  const { deckName, fromDate } = route.params;
+  const { deckName, initialSessionCards } = route.params;
   const deck = useSelector(state => state.decks.find(deck => deck.name === deckName));
-  const [sessionCards, setSessionCards] = useState(
-    deck.cards
-      .filter(card => isDue(card, fromDate))
-      .reduce((obj, card) => {
-        if (!(card.state in obj)) obj[card.state] = [];
-        if (obj[card.state].length < deck.maxCardsEverySession[card.state]) obj[card.state].push(card);
-        return obj;
-      }, {})
-  );
+  const [sessionCards, setSessionCards] = useState(initialSessionCards);
 
   const fsrs = new FSRS();
   const dispatch = useDispatch();

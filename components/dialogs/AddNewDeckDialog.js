@@ -1,8 +1,8 @@
 import { useDispatch } from "react-redux";
-import { addEmptyDeck } from "../storage/actions";
+import { addEmptyDeck } from "../../storage/actions";
 import { useState } from "react";
 import { StyleSheet, Text, TextInput } from "react-native";
-import Dialog from "./wrappers/Dialog";
+import Dialog from "./Dialog";
 
 const AddNewDeckDialog = ({ isOpen, onClose }) => {
   const [deckName, setDeckName] = useState('');
