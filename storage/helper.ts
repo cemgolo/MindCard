@@ -19,13 +19,10 @@ function createCard(
 function createDeck(name: string, cards: FlashCard[] = []): FlashCardDeck {
     return {
         name: name,
-        maxCardsEverySession: {
-            [State.New]:        5,
-            [State.Learning]:   Infinity,
-            [State.Review]:     20,
-            [State.Relearning]: Infinity
-        },
-        cards: cards
+        cards: cards,
+        lastSessionDate: new Date(),
+        newCardsPerDay: 5,
+        newCardsSeenToday: 0,
     };
 }
 

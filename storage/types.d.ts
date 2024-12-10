@@ -24,8 +24,10 @@ interface FlashCard extends Card {
 
 interface FlashCardDeck {
     name: string;
-    maxCardsEverySession: { [state: State]: number };
     cards: FlashCard[];
+    lastSessionDate: Date;
+    newCardsPerDay: number;
+    newCardsSeenToday: number;
 }
 
 interface ReduxDeckState {
