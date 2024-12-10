@@ -19,13 +19,16 @@ const CardList = ({ searchText }) => {
   //   console.log(cards); // Debug the `cards` structure
   // }, [cards]);
 
-  const validCards = cards.filter(card => card && card.frontDescription);
-  const filteredCards = validCards.filter(card =>
-    card.frontDescription.toLowerCase().includes(searchText.toLowerCase())
-  );
+  
+  const filteredCards = searchText
+  ? cards.filter(card =>
+      card.frontDescription.toLowerCase().includes(searchText.toLowerCase())
+    )
+  : cards; // Return all cards if no search text
+
 
   const handleCardPress = (card) => {
-    navigation.navigate('EditCardScreen', { card });
+    navigation.navigate('EditCardScreen', { deckName: deck.name, card });
   };
 
   const renderCardItem = ({ item }) => (

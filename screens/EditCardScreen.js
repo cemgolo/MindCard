@@ -11,49 +11,68 @@ import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import * as ImagePicker from 'expo-image-picker';
 import { useDispatch } from 'react-redux';
-import { ADD_CARD, DELETE_CARD } from '../storage/actions';
+import { ADD_CARD, DELETE_CARD, UPDATE_CARD } from '../storage/actions';
+import uuid from 'react-native-uuid';
 
 const EditCardScreen = ({ route }) => {
+  console.log('CardID:', card?.uuid);
   const { deckName, card } = route.params;
   const navigation = useNavigation();
 
-  // Handle the case where card is null (new card creation)
   const [image, setImage] = useState(card?.image || null);
   const [frontDescription, setFrontDescription] = useState(card?.frontDescription || '');
-
   const [backDescription, setBackDescription] = useState(card?.backDescription || '');
-
   const [isFrontTab, setIsFrontTab] = useState(true); // Active tab state
 
   const dispatch = useDispatch();
 
-  const handleCreateCard = () => {
-    if (!frontDescription) {
-      alert('Please provide at least a front description for the card.');
+  const handleSave = () => {
+    console.log('Updated Card:', card?.uuid); // Debug UUID
+    console.log('Updated Front:', frontDescription);
+    console.log('Updated Back:', backDescription);
+    console.log('Updated Image:', image);
+    if (!frontDescription && !image) {
+      alert('Please provide at least a front description or an image.');
       return;
     }
-
-    const newCard = {
-        id: Date.now(),
+  
+    const updatedCard = {
+      ...card,
+      frontDescription,
+      backDescription,
+      image,
+    };
+  
+    if (card?.uuid) {
+      // Update the card
+      dispatch({
+        type: UPDATE_CARD,
+        payload: { deckName, updatedCard },
+      });
+    } else {
+      // Create a new card
+      const newCard = {
+        uuid: uuid.v4(),
         frontDescription,
         backDescription,
         image,
-    };
-
-    // Add the new card to the 'Fruit vocab' deck
-    dispatch({
-      type: ADD_CARD,
-      payload:{deckName, card: newCard}
-    });
-
+      };
+  
+      dispatch({
+        type: ADD_CARD,
+        payload: { deckName, card: newCard },
+      });
+    }
+  
     navigation.goBack();
   };
+  
 
 const handleDelete = () => {
-  const selectedDeckName = deckName; // Replace with the actual deck name
+  // const selectedDeckName = deckName; // Replace with the actual deck name
   dispatch({
       type: DELETE_CARD,
-      payload: { deckName: selectedDeckName, cardId: card.id }, // Pass the card ID
+      payload: { deckName, cardId: card.uuid }, // Pass the card ID
   });
   navigation.goBack();
 };
@@ -138,7 +157,7 @@ const handleEditImage = async () => {
         <TouchableOpacity style={styles.deleteButton} onPress={handleDelete}>
           <Text style={styles.buttonText}>Delete</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.saveButton} onPress={handleCreateCard}>
+        <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
           <Text style={styles.buttonText}>Save</Text>
         </TouchableOpacity>
       </View>

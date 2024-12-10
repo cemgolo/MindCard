@@ -1,4 +1,4 @@
-import { ADD_DECK, ADD_CARD, DELETE_CARD } from "./actions";
+import { ADD_DECK, ADD_CARD, DELETE_CARD, ADD_EMPTY_DECK, UPDATE_CARD  } from "./actions";
 
 const initialState = {
   decks: [
@@ -9,16 +9,16 @@ const initialState = {
           performance: { seen: 30, learned: 20, failed: 5, toReview: 5 },
           cards: [
               {   
-                  id: '1',
+                  uuid: '1',
                   frontDescription: 'Orange',
                   backDescription: 'A fruit rich in vitamin C.',
-                  image: '/assets/orange.jpeg', 
+                  image: './assets/orange.jpeg', 
               },
               {
-                  id: '2',
+                  uuid: '2',
                   frontDescription: 'Apple',
                   backDescription: 'A fruit that keeps the doctor away.',
-                  image: '/assets/apple.jpeg', 
+                  image: './assets/orange.jpeg', 
               },
           ],
       },
@@ -36,15 +36,16 @@ const deckReducer = (state = initialState, action) => {
     switch (action.type) {
       case ADD_DECK: {
         return {
-          ...state,
-          decks: [
-            ...state.decks,
-            {
-              ...action.payload,
-              cards: [], // Ensure the new deck has an empty cards array
-            },
-          ],
+            ...state,
+            decks: [ ...state.decks, action.payload ]
         };
+      }
+
+      case ADD_EMPTY_DECK: {
+        return {
+            ...state,
+            decks: [ ...state.decks, createDeck(action.payload) ]
+        }
       }
       case ADD_CARD: {
         const { deckName, card } = action.payload;
@@ -55,7 +56,8 @@ const deckReducer = (state = initialState, action) => {
             deck.name === deckName
               ? {
                   ...deck,
-                  cards: [...(deck.cards || []), card] }
+                  cards: [...(deck.cards || []), card] 
+                }
               : deck
           ),
         };
@@ -63,18 +65,39 @@ const deckReducer = (state = initialState, action) => {
       case DELETE_CARD: {
         const { deckName, cardId } = action.payload;
         return {
-            ...state,
-            decks: state.decks.map(deck =>
-                deck.name === deckName
-                    ? { ...deck, cards: deck.cards.filter(card => card.id !== cardId) }
-                    : deck
-            ),
+          ...state,
+          decks: state.decks.map(deck =>
+            deck.name === deckName
+              ? { 
+                  ...deck, 
+                  cards: deck.cards.filter(card => card.uuid && card.uuid !== cardId) 
+                }
+              : deck
+          ),
         };
-    }
+      }
+      case UPDATE_CARD: {
+        const { deckName, updatedCard } = action.payload;
+        return {
+          ...state,
+          decks: state.decks.map((deck) =>
+            deck.name === deckName
+              ? {
+                  ...deck,
+                  cards: deck.cards.map((card) =>
+                    card.uuid === updatedCard.uuid ? updatedCard : card
+                  ),
+                }
+              : deck
+          ),
+        };
+      }
+
       default:
         return state;
-    }
+      
   };
+}
   
 
 export default deckReducer;
