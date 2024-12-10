@@ -1,21 +1,10 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
-import PieChart from '../components/PieChart';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import buttonStyles from '../styles/buttons';
-import { State } from 'ts-fsrs';
 import { useSelector } from 'react-redux';
-import { cardStateColors, generateSessionCards, isDue } from '../storage/helper';
+import { generateSessionCards } from '../storage/helper';
 import ReviewInAdvanceDialog from '../components/dialogs/ReviewInAdvanceDialog';
-
-function createPieData(sessionCards) {
-  return Object.entries(cardStateColors).map(([state, stateColor]) => ({
-    name: State[state],
-    count: sessionCards[state]?.filter(card => card.state == state).length ?? 0,
-    color: stateColor,
-    legendFontColor: "#333",
-    legendFontSize: 14
-  }));
-}
+import CardStatesPieChart from '../components/CardStatesPieChart';
 
 const DeckDetailScreen = ({ route, navigation }) => {
   const { deckName } = route.params;
@@ -39,7 +28,7 @@ const DeckDetailScreen = ({ route, navigation }) => {
       <Text style={styles.detailText}>Total Cards: {deck.cards.length}</Text>
 
       {/* Pie Chart Component */}
-      <PieChart data={createPieData(sessionCards)} title='Cards to study today' />
+      <CardStatesPieChart cards={sessionCards} />
 
       {/* Buttons */}
       <View style={styles.buttonContainer}>
