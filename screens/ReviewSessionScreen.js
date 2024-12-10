@@ -20,9 +20,8 @@ const ReviewSessionScreen = ({ route, navigation }) => {
     return cardsOfRandomState[Math.floor(Math.random() * cardsOfRandomState.length)];
   }
   const removeCardFromSession = (card) => {
-    const cardIndex = sessionCards[card.state].findIndex(item => item.uuid === card.uuid);
     const {[card.state]: _, otherStateCards} = sessionCards;
-    const newStateCards = sessionCards[card.state].filter((_, i) => i !== cardIndex);
+    const newStateCards = sessionCards[card.state].filter(item => item.uuid !== card.uuid);
     
     if (newStateCards.length <= 0) {
       setSessionCards(otherStateCards);
