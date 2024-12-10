@@ -4,31 +4,8 @@ import PieChart from '../components/PieChart';
 import buttonStyles from '../styles/buttons';
 import { State } from 'ts-fsrs';
 import { useSelector } from 'react-redux';
-import { isDue } from '../storage/helper';
-import Dialog from '../components/dialogs/Dialog';
+import { generateSessionCards, isDue } from '../storage/helper';
 import ReviewInAdvanceDialog from '../components/dialogs/ReviewInAdvanceDialog';
-
-function generateSessionCards(deck, fromDate) {
-  let newCardCount = 0;
-  return deck.cards
-    .filter(card => {
-      if (card.state === State.New) {
-        if (newCardCount < deck.newCardsPerDay - deck.newCardsSeenToday) {
-          newCardCount++;
-          return true;
-        } else {
-          return false;
-        }
-      } else {
-        return isDue(card, fromDate)
-      }
-    })
-    .reduce((obj, card) => {
-      if (!(card.state in obj)) obj[card.state] = [];
-      obj[card.state].push(card);
-      return obj;
-    }, {});
-}
 
 function createPieData(sessionCards) {
   const STATES = [
@@ -50,13 +27,14 @@ function createPieData(sessionCards) {
 const DeckDetailScreen = ({ route, navigation }) => {
   const { deckName } = route.params;
   const deck = useSelector(state => state.decks.find(deck => deck.name === deckName));
+  
   const sessionCards = generateSessionCards(deck);
 
   const [isPopupVisible, setIsPopupVisible] = useState(false);
 
   const start = () => {
     if (Object.keys(sessionCards).length > 0) {
-      navigation.navigate('ReviewSessionScreen', { deckName, initialSessionCards: sessionCards });
+      navigation.navigate('ReviewSessionScreen', { deckName });
     } else {
       setIsPopupVisible(true);
     }

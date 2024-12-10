@@ -31,4 +31,27 @@ function isDue(card: FlashCard, fromDate?: Date): boolean {
     return card.state === State.Learning || dueDate <= (fromDate ?? new Date());
 }
 
-export { createCard, createDeck, isDue }
+function generateSessionCards(deck: FlashCardDeck, fromDate: Date) {
+    let newCardCount = 0;
+
+    return deck.cards
+      .filter(card => {
+        if (card.state === State.New) {
+          if (newCardCount < deck.newCardsPerDay - deck.newCardsSeenToday) {
+            newCardCount++;
+            return true;
+          } else {
+            return false;
+          }
+        } else {
+          return isDue(card, fromDate)
+        }
+      })
+      .reduce((obj: {[key: number]: FlashCard[]}, card) => {
+        if (!(card.state in obj)) obj[card.state] = [];
+        obj[card.state].push(card);
+        return obj;
+      }, {});
+}
+
+export { createCard, createDeck, isDue, generateSessionCards }

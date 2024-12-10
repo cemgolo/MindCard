@@ -3,14 +3,14 @@ import { View, Text, StyleSheet } from 'react-native';
 import FlashCard from '../components/FlashCard';
 import { useDispatch, useSelector } from 'react-redux';
 import { FSRS } from 'ts-fsrs';
-import { isDue } from '../storage/helper';
+import { generateSessionCards, isDue } from '../storage/helper';
 import { updateCard } from '../storage/actions';
 import { randomObjectValue } from '../scripts/arrays';
 
 const ReviewSessionScreen = ({ route, navigation }) => {
-  const { deckName, initialSessionCards } = route.params;
+  const { deckName } = route.params;
   const deck = useSelector(state => state.decks.find(deck => deck.name === deckName));
-  const [sessionCards, setSessionCards] = useState(initialSessionCards);
+  const [sessionCards, setSessionCards] = useState(generateSessionCards(deck));
 
   const fsrs = new FSRS();
   const dispatch = useDispatch();
@@ -21,9 +21,14 @@ const ReviewSessionScreen = ({ route, navigation }) => {
   }
   const removeCardFromSession = (card) => {
     const cardIndex = sessionCards[card.state].findIndex(item => item.uuid === card.uuid);
-    sessionCards[card.state].splice(cardIndex, 1);
-    if (sessionCards[card.state].length === 0) delete sessionCards[card.state];
-    setSessionCards(sessionCards);
+    const {[card.state]: _, otherStateCards} = sessionCards;
+    const newStateCards = sessionCards[card.state].filter((_, i) => i !== cardIndex);
+    
+    if (newStateCards.length <= 0) {
+      setSessionCards(otherStateCards);
+    } else {
+      setSessionCards({ [card.state]: newStateCards, ...otherStateCards })
+    }
   }
   const addCardToSession = (card) => {
     if (!(card.state in sessionCards)) sessionCards[card.state] = [];
@@ -44,7 +49,7 @@ const ReviewSessionScreen = ({ route, navigation }) => {
       setCurrentCard(pickRandomCard());
       setFlipped(false); // Reset flipped state when moving to the next card
     } else {
-      navigation.navigate('ReviewSessionEndScreen', { deckName,  });
+      navigation.navigate('ReviewSessionEndScreen', { deckName });
     }
   };
 
