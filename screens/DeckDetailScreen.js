@@ -10,7 +10,7 @@ import ReviewInAdvanceDialog from '../components/dialogs/ReviewInAdvanceDialog';
 function createPieData(sessionCards) {
   return Object.entries(cardStateColors).map(([state, stateColor]) => ({
     name: State[state],
-    count: sessionCards[state]?.filter(card => isDue(card) && card.state == state).length ?? 0,
+    count: sessionCards[state]?.filter(card => card.state == state).length ?? 0,
     color: stateColor,
     legendFontColor: "#333",
     legendFontSize: 14
