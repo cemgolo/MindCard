@@ -81,7 +81,11 @@ const DeckDetailScreen = ({ route, navigation }) => {
           <Text style={buttonStyles.primaryText}>Start</Text>
         </TouchableOpacity>
       </View>
-      <ReviewInAdvanceDialog />
+      <ReviewInAdvanceDialog
+        deck={deck}
+        isOpen={isPopupVisible}
+        onClose={() => setIsPopupVisible(false)}
+      />
     </View>
   );
 };
