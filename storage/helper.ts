@@ -1,4 +1,4 @@
-import { createEmptyCard, State } from "ts-fsrs";
+import { createEmptyCard, Rating, State } from "ts-fsrs";
 import { FlashCard, FlashCardDeck, FlashCardSide } from "./types";
 import uuid from "react-native-uuid";
 
@@ -54,4 +54,11 @@ function generateSessionCards(deck: FlashCardDeck, fromDate: Date) {
       }, {});
 }
 
-export { createCard, createDeck, isDue, generateSessionCards }
+const cardReviewRatings = [
+    { label: 'Fail', action: Rating.Again, color: '#ff6666' },
+    { label: 'Slow', action: Rating.Hard, color: '#ffd966' },
+    { label: 'Average', action: Rating.Good, color: '#00bbff' },
+    { label: 'Fast', action: Rating.Easy, color: '#66cc66' }
+];
+
+export { createCard, createDeck, isDue, generateSessionCards, cardReviewRatings }

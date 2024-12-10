@@ -1,20 +1,13 @@
 import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
-import { Rating } from "ts-fsrs";
+import { cardReviewRatings } from "../storage/helper";
 
 const RatingButtons = ({ onRate }) => {
-  const ratings = [
-    { label: 'Fail', action: Rating.Again, color: '#ff6666' },
-    { label: 'Slow', action: Rating.Hard, color: '#ffd966' },
-    { label: 'Average', action: Rating.Good, color: '#00bbff' },
-    { label: 'Fast', action: Rating.Easy, color: '#66cc66' }
-  ];
-
   return (
     <View style={styles.ratingContainer}>
       <Text style={styles.ratingTitle}>Rate your recall performance</Text>
       <View style={styles.ratingButtons}>
-        {ratings.map(rating => 
+        {cardReviewRatings.map(rating => 
           <TouchableOpacity key={rating.label} style={[styles.button, {backgroundColor: rating.color}]} onPress={() => onRate(rating.action)}>
             <Text style={styles.buttonText}>{rating.label}</Text>
           </TouchableOpacity>
