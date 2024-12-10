@@ -51,7 +51,7 @@ const ReviewSessionScreen = ({ route, navigation }) => {
     dispatch(updateCard(newCard));
     if (isDue(newCard)) newSessionCards = addCardToSession(newSessionCards, newCard);
 
-    if (Object.keys(newSessionCards).length == 0) {
+    if (Object.keys(newSessionCards).length > 0) {
       setSessionCards(newSessionCards);
       setCurrentCard(pickRandomCard(newSessionCards));
       setFlipped(false); // Reset flipped state when moving to the next card
