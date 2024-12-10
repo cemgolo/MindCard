@@ -74,9 +74,6 @@ const ReviewSessionScreen = ({ route, navigation }) => {
         onFlip={toggleFlip} // Pass flip handler
         onRate={handleRating} // Pass rating handler
       />
-      <Text style={styles.progress}>
-        {/* Card {currentCardIndex + 1} of {deck.cards.length} */}
-      </Text>
     </View>
   );
 };
@@ -85,18 +82,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 20,
-    textAlign: 'center',
-  },
-  progress: {
-    fontSize: 16,
-    textAlign: 'center',
-    marginTop: 20,
-  },
+  }
 });
 
 export default ReviewSessionScreen;
