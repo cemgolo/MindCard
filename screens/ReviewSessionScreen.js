@@ -6,6 +6,7 @@ import { FSRS } from 'ts-fsrs';
 import { cardReviewRatings, generateSessionCards, isDue } from '../storage/helper';
 import { updateCard } from '../storage/actions';
 import { randomObjectValue } from '../scripts/arrays';
+import ReviewSessionCardStateBar from '../components/ReviewSessionCardStateBar';
 
 function pickRandomCard(cards) {
   const cardsOfRandomState = randomObjectValue(cards);
@@ -65,8 +66,8 @@ const ReviewSessionScreen = ({ route, navigation }) => {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>{deck.name}</Text>
+    <View style={{flex: 1}}>
+      <ReviewSessionCardStateBar sessionCards={sessionCards} />
       <FlashCard
         front={currentCard.content.front}
         back={currentCard.content.back}
@@ -77,12 +78,5 @@ const ReviewSessionScreen = ({ route, navigation }) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 20,
-  }
-});
 
 export default ReviewSessionScreen;

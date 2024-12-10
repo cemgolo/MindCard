@@ -22,6 +22,7 @@ const FlashCard = ({ front, back, flipped, onFlip, onRate }) => {
 const styles = StyleSheet.create({
   cardContainer: {
     flex: 1,
+    margin: 20,
     justifyContent: 'center',
     alignItems: 'center',
   },
