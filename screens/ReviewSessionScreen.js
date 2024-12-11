@@ -34,8 +34,6 @@ const ReviewSessionScreen = ({ route, navigation }) => {
   const deck = useSelector(state => state.decks.find(deck => deck.name === deckName));
   const [sessionCards, setSessionCards] = useState(generateSessionCards(deck, reviewFromDate));
   const [userRatings, setUserRatings] = useState(cardReviewRatings.reduce((acc, rating) => ({...acc, [rating.label]: 0}), {}));
-
-  console.log(sessionCards, reviewFromDate);
   
   const fsrs = new FSRS();
   const dispatch = useDispatch();
