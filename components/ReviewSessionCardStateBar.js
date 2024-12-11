@@ -22,7 +22,7 @@ const ReviewSessionCardStateBar = ({ sessionCards }) => {
                     </View>
                 )
             }
-            <Text style={styles.expandIcon}>{isExpanded ? '-' : '⋯'}</Text>
+            <Text style={styles.expandIcon}>{isExpanded ? '↑' : '↓'}</Text>
         </TouchableOpacity>
     )
 };
@@ -52,6 +52,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         right: 10,
         top: 10,
+        color: 'gray'
     }
 });
 
