@@ -1,11 +1,16 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import RatingButtons from './RatingButtons';
 
-const FlashCard = ({ front, back, flipped, onFlip, onRate }) => {
+const FlashCard = ({ front, back, frontImage, backImage, flipped, onFlip, onRate }) => {
   return (
     <View style={styles.cardContainer}>
       <View style={styles.card}>
+        {flipped ? (
+          backImage && <Image source={{ uri: backImage }} style={styles.cardImage} />
+        ) : (
+          frontImage && <Image source={{ uri: frontImage }} style={styles.cardImage} />
+        )}
         <Text style={styles.cardText}>{flipped ? back : front}</Text>
       </View>
       {!flipped ? (
@@ -18,6 +23,7 @@ const FlashCard = ({ front, back, flipped, onFlip, onRate }) => {
     </View>
   );
 };
+
 
 const styles = StyleSheet.create({
   cardContainer: {
@@ -37,16 +43,26 @@ const styles = StyleSheet.create({
     shadowRadius: 3,
     elevation: 3,
     width: '80%',
-    height: '50%',
+    height: '70%',
     justifyContent: 'center', 
-    alignItems: 'center', 
+    alignItems: 'center',
   },
   cardText: {
+    marginTop: 40,
     fontSize: 32, 
     fontWeight: 'bold',
     textAlign: 'center',
     flexShrink: 1, 
     maxWidth: '90%', 
+  },
+  cardImage: {
+    width: '90%',
+    height: '60%', // Adjust the height of the image
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
+    borderBottomRightRadius: 10,
+    borderBottomLeftRadius: 10, 
+    alignSelf: 'center',
   },
   flipButton: {
     marginTop: 20,
