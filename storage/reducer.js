@@ -1,8 +1,9 @@
-import { ADD_DECK, ADD_CARD, DELETE_CARD, ADD_EMPTY_DECK, UPDATE_CARD  } from "./actions";
+import { ADD_DECK, ADD_CARD, DELETE_CARD, ADD_EMPTY_DECK, UPDATE_CARD, DELETE_DECK } from "./actions";
 
 const initialState = {
   decks: [
-      {
+      {   
+          uuid: '1',
           name: 'Fruit vocab',
           totalCards: 50,
           cardsPerRound: 10,
@@ -22,7 +23,8 @@ const initialState = {
               },
           ],
       },
-      {
+      {   
+          uuid:'2',
           name: 'Rocket science',
           totalCards: 80,
           cardsPerRound: 10,
@@ -90,6 +92,13 @@ const deckReducer = (state = initialState, action) => {
                 }
               : deck
           ),
+        };
+      }
+      case DELETE_DECK: {
+        const updatedDecks = state.decks.filter((deck) => deck.name !== action.payload);
+        return {
+          ...state,
+          decks: updatedDecks,
         };
       }
 

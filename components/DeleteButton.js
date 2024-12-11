@@ -1,23 +1,38 @@
 import React from 'react';
-import { TouchableOpacity, StyleSheet } from 'react-native';
+import { Alert, TouchableOpacity, StyleSheet, Text } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-const DeleteButton = ({ onPress }) => {
+const DeleteButton = ({ itemName, onDelete }) => {
+  const confirmDelete = () => {
+    Alert.alert(
+      'Confirm Delete',
+      `Are you sure you want to delete "${itemName}"?`,
+      [
+        { text: 'Cancel', style: 'cancel' },
+        { text: 'Delete', style: 'destructive', onPress: onDelete },
+      ]
+    );
+  };
+
   return (
-    <TouchableOpacity style={styles.container} onPress={onPress}>
-      <Icon name="delete" size={15} color="#fff" />
+    <TouchableOpacity onPress={confirmDelete} style={styles.button}>
+      <Icon name="delete" size={16} color="#fff" />
     </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    width: 24,
-    height: 24,
-    borderRadius: 12,
-    backgroundColor: '#ff4444',
-    justifyContent: 'center',
+  button: {
+    width: 25,
+    height: 25,
+    borderRadius: 15,
+    backgroundColor: 'red',
     alignItems: 'center',
+    justifyContent: 'center',
+  },
+  buttonText: {
+    color: '#fff',
+    fontWeight: 'bold',
   },
 });
 

@@ -3,6 +3,7 @@ export const ADD_EMPTY_DECK = "ADD_EMPTY_DECK";
 export const ADD_CARD = "ADD_CARD";
 export const DELETE_CARD = "DELETE_CARD";
 export const UPDATE_CARD = "UPDATE_CARD";
+export const DELETE_DECK = "DELETE_DECK";
 
 export const addDeck = (deck) => ({
     type: ADD_DECK,
@@ -28,3 +29,8 @@ export const updateCard = card => ({
     type: UPDATE_CARD,
     payload: card
 });
+
+export const deleteDeck = (deckName) => ({
+    type: DELETE_DECK,
+    payload: deckName
+})
