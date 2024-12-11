@@ -12,13 +12,13 @@ import SearchHeader from '../components/SearchHeader';
 
 const EditDeckScreen = ({ route, navigation }) => {
   const { deck } = route.params;
-  const [deckName, setDeckName] = useState(deck.name); // State for deck name
-  const [isEditing, setIsEditing] = useState(false); // State for edit mode
-  const [searchText, setSearchText] = useState(''); // State for search input
+  const [deckName, setDeckName] = useState(deck.name);
+  const [isEditing, setIsEditing] = useState(false);
+  const [searchText, setSearchText] = useState('');
 
   const handleSave = () => {
     console.log('Updated Deck Name:', deckName);
-    setIsEditing(false); // Exit edit mode
+    setIsEditing(false);
   };
 
   return (
@@ -32,7 +32,7 @@ const EditDeckScreen = ({ route, navigation }) => {
                 value={deckName}
                 onChangeText={setDeckName}
                 autoFocus
-                onSubmitEditing={handleSave} // Save on pressing Enter
+                onSubmitEditing={handleSave}
               />
             ) : (
               <Text style={styles.deckName}>{deckName}</Text>

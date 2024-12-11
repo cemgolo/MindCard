@@ -15,22 +15,17 @@ import { ADD_CARD, DELETE_CARD, UPDATE_CARD } from '../storage/actions';
 import uuid from 'react-native-uuid';
 
 const EditCardScreen = ({ route }) => {
-  console.log('CardID:', card?.uuid);
   const { deckName, card } = route.params;
   const navigation = useNavigation();
 
   const [image, setImage] = useState(card?.image || null);
   const [frontDescription, setFrontDescription] = useState(card?.frontDescription || '');
   const [backDescription, setBackDescription] = useState(card?.backDescription || '');
-  const [isFrontTab, setIsFrontTab] = useState(true); // Active tab state
+  const [isFrontTab, setIsFrontTab] = useState(true);
 
   const dispatch = useDispatch();
 
   const handleSave = () => {
-    console.log('Updated Card:', card?.uuid); // Debug UUID
-    console.log('Updated Front:', frontDescription);
-    console.log('Updated Back:', backDescription);
-    console.log('Updated Image:', image);
     if (!frontDescription && !image) {
       alert('Please provide at least a front description or an image.');
       return;
@@ -69,10 +64,9 @@ const EditCardScreen = ({ route }) => {
   
 
 const handleDelete = () => {
-  // const selectedDeckName = deckName; // Replace with the actual deck name
   dispatch({
       type: DELETE_CARD,
-      payload: { deckName, cardId: card.uuid }, // Pass the card ID
+      payload: { deckName, cardId: card.uuid },
   });
   navigation.goBack();
 };

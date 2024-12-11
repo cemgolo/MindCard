@@ -8,18 +8,18 @@ const PieChart = ({ data }) => {
       <Text style={styles.chartTitle}>Performance Overview</Text>
       <RNMPieChart
         data={data}
-        width={Dimensions.get('window').width - 40} // Chart width (screen width minus some padding)
-        height={220} // Chart height
+        width={Dimensions.get('window').width - 40}
+        height={220}
         chartConfig={{
           backgroundColor: '#f4f4f4',
           backgroundGradientFrom: '#f4f4f4',
           backgroundGradientTo: '#f4f4f4',
           color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
         }}
-        accessor="count" // Key to determine value
+        accessor="count"
         backgroundColor="transparent"
         paddingLeft="15"
-        absolute // Show absolute values
+        absolute
       />
     </View>
   );

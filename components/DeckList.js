@@ -1,13 +1,24 @@
 import React from 'react';
 import { Text, TouchableOpacity, FlatList, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import DeleteButton from './DeleteButton';
+import { DELETE_DECK } from '../storage/actions';
 
 const DeckList = ({ searchText }) => {
+  const dispatch = useDispatch();
   const navigation = useNavigation();
   const decks = useSelector(state => state.decks);
 
-  // Filter decks based on the search text
+  const handleDeleteDeck = (deckName) => {
+    console.log(`Deleting deck: ${deckName}`);
+    console.log('Redux decks:', decks);
+    dispatch({
+      type: DELETE_DECK,
+      payload: deckName,
+    });
+  };
+
   const filteredDecks = decks.filter(deck =>
     deck.name.toLowerCase().includes(searchText.toLowerCase())
   );
@@ -19,6 +30,7 @@ const DeckList = ({ searchText }) => {
   const renderDeckItem = ({ item }) => (
     <TouchableOpacity onPress={() => handleDeckPress(item)} style={styles.deckItem}>
       <Text style={styles.deckName}>{item.name}</Text>
+      <DeleteButton onPress={() => handleDeleteDeck(item.name)}/>
     </TouchableOpacity>
   );
 
@@ -37,6 +49,9 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
   deckItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
     padding: 15,
     backgroundColor: '#fff',
     marginBottom: 10,

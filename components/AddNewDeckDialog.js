@@ -11,13 +11,13 @@ const AddNewDeckDialog = ({ isOpen, onClose }) => {
   const handleCreateDeck = () => {
     const trimmedDeckName = deckName.trim();
     if (trimmedDeckName) {
-      dispatch(addDeck({ // Add the new deck to the list
+      dispatch(addDeck({
         name: trimmedDeckName,
         totalCards: 0,
         cardsPerRound: 10,
         performance: { seen: 0, learned: 0, failed: 0, toReview: 0 }
       }));
-      onClose(); // Close the modal
+      onClose();
     } else {
       alert('Please enter a deck name!');
     }

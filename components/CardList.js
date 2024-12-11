@@ -15,16 +15,11 @@ const CardList = ({ searchText }) => {
     return selectedDeck ? selectedDeck.cards : [];
   });
 
-  // useEffect(() => {
-  //   console.log(cards); // Debug the `cards` structure
-  // }, [cards]);
-
-  
   const filteredCards = searchText
   ? cards.filter(card =>
       card.frontDescription.toLowerCase().includes(searchText.toLowerCase())
     )
-  : cards; // Return all cards if no search text
+  : cards;
 
 
   const handleCardPress = (card) => {
