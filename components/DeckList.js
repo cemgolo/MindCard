@@ -3,7 +3,7 @@ import { Text, TouchableOpacity, FlatList, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import DeleteButton from './DeleteButton';
-import { DELETE_DECK } from '../storage/actions';
+import { deleteDeck } from '../storage/actions';
 
 const DeckList = ({ searchText }) => {
   const dispatch = useDispatch();
@@ -11,12 +11,7 @@ const DeckList = ({ searchText }) => {
   const decks = useSelector(state => state.decks);
 
   const handleDeleteDeck = (deckName) => {
-    console.log(`Deleting deck: ${deckName}`);
-    console.log('Redux decks:', decks);
-    dispatch({
-      type: DELETE_DECK,
-      payload: deckName,
-    });
+    dispatch(deleteDeck(deckName));
   };
 
   const filteredDecks = decks.filter(deck =>
@@ -24,7 +19,7 @@ const DeckList = ({ searchText }) => {
   );
 
   const handleDeckPress = (deck) => {
-    navigation.navigate('DeckDetail', { deck });
+    navigation.navigate('DeckDetail', { deckName: deck.name });
   };
 
   const renderDeckItem = ({ item }) => (

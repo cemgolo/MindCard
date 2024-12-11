@@ -2,14 +2,14 @@ import React from 'react';
 import { PieChart as RNMPieChart } from 'react-native-chart-kit';
 import { Dimensions, View, Text, StyleSheet } from 'react-native';
 
-const PieChart = ({ data }) => {
+const PieChart = ({ data, title, height = 220 }) => {
   return (
     <View style={styles.chartContainer}>
-      <Text style={styles.chartTitle}>Performance Overview</Text>
+      {title.length > 0 && <Text style={styles.chartTitle}>{title}</Text>}
       <RNMPieChart
         data={data}
-        width={Dimensions.get('window').width - 40}
-        height={220}
+        width={Dimensions.get('window').width - 40} // Chart width (screen width minus some padding)
+        height={height} // Chart height
         chartConfig={{
           backgroundColor: '#f4f4f4',
           backgroundGradientFrom: '#f4f4f4',
@@ -27,14 +27,13 @@ const PieChart = ({ data }) => {
 
 const styles = StyleSheet.create({
   chartContainer: {
-    marginVertical: 20,
     alignItems: 'center',
   },
   chartTitle: {
     fontSize: 20,
     fontWeight: 'bold',
     color: '#333',
-    marginBottom: 10,
+    marginBottom: 10
   },
 });
 

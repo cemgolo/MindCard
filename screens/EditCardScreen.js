@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import {
   View,
   Text,
@@ -10,88 +10,93 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import * as ImagePicker from 'expo-image-picker';
-import { useDispatch } from 'react-redux';
-import { ADD_CARD, DELETE_CARD, UPDATE_CARD } from '../storage/actions';
+import { useDispatch, useSelector } from 'react-redux';
+import { ADD_CARD, addCard, DELETE_CARD, deleteCard, UPDATE_CARD, updateCard } from '../storage/actions';
 import uuid from 'react-native-uuid';
+import { createCard } from '../storage/helper';
 
 const EditCardScreen = ({ route }) => {
-  const { deckName, card } = route.params;
+  const { deckName, cardUuid } = route.params;
   const navigation = useNavigation();
 
-  const [image, setImage] = useState(card?.image || null);
-  const [frontDescription, setFrontDescription] = useState(card?.frontDescription || '');
-  const [backDescription, setBackDescription] = useState(card?.backDescription || '');
+  const card = useSelector(state =>
+    state.decks
+      .find(deck => deck.name === deckName)
+      .cards
+      .find(card => card.uuid === cardUuid)
+  );
+
   const [isFrontTab, setIsFrontTab] = useState(true);
+  const currentTab = useMemo(() => isFrontTab ? 'front' : 'back', [isFrontTab]);
+  const [cardContent, setCardContent] = useState(card.content);
+  const setCardSideProperty = (property, value) => {
+    setCardContent({
+      ...cardContent,
+      [currentTab]: {
+        ...cardContent[currentTab],
+        [property]: value
+      }
+    });
+  }
+  const deleteCardSideProperty = (property) => {
+    const { [property]: _, otherSideProperties } = cardContent[side];
+    setCardContent({
+      ...cardContent,
+      [currentTab]: {
+        ...otherSideProperties
+      }
+    })
+  }
 
   const dispatch = useDispatch();
 
   const handleSave = () => {
-    if (!frontDescription && !image) {
-      alert('Please provide at least a front description or an image.');
+    const hasFrontSide = Object.keys(cardContent.front).length > 0;
+    const hasBackSide = Object.keys(cardContent.back).length > 0;
+    if (!hasFrontSide || !hasBackSide) {
+      alert(`Please provide at least a ${!hasFrontSide ? 'front' : 'back'} description or an image.`);
       return;
     }
   
-    const updatedCard = {
-      ...card,
-      frontDescription,
-      backDescription,
-      image,
-    };
-  
     if (card?.uuid) {
       // Update the card
-      dispatch({
-        type: UPDATE_CARD,
-        payload: { deckName, updatedCard },
-      });
+      dispatch(updateCard(deckName, { ...card, content: cardContent }));
     } else {
       // Create a new card
-      const newCard = {
-        uuid: uuid.v4(),
-        frontDescription,
-        backDescription,
-        image,
-      };
-  
-      dispatch({
-        type: ADD_CARD,
-        payload: { deckName, card: newCard },
-      });
+      const newCard = createCard(cardContent.front, cardContent.back);
+      dispatch(addCard(deckName, newCard));
     }
   
     navigation.goBack();
   };
   
 
-const handleDelete = () => {
-  dispatch({
-      type: DELETE_CARD,
-      payload: { deckName, cardId: card.uuid },
-  });
-  navigation.goBack();
-};
+  const handleDelete = () => {
+    dispatch(deleteCard(deckName, card.uuid));
+    navigation.goBack();
+  };
 
-const handleEditImage = async () => {
-  const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
-  
-  if (!permissionResult.granted) {
-    alert('Permission to access media library is required!');
-    return;
-  }
+  const handleEditImage = async () => {
+    const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    
+    if (!permissionResult.granted) {
+      alert('Permission to access media library is required!');
+      return;
+    }
 
-  const result = await ImagePicker.launchImageLibraryAsync({
-    mediaTypes: ImagePicker.Images,
-    allowsEditing: true,
-    quality: 1,
-  });
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.Images,
+      allowsEditing: true,
+      quality: 1,
+    });
 
-  if (!result.canceled) {
-    setImage(result.assets[0].uri);
-  }
-};
+    if (!result.canceled) {
+      setCardSideProperty('imageUrl', result.assets[0].uri);
+    }
+  };
   
   const handleDeleteImage = () => {
-    setImage(null);
+    deleteCardSideProperty('imageUrl');
   };
 
   return (
@@ -122,8 +127,8 @@ const handleEditImage = async () => {
       {/* Card Content */}
       <View style={styles.cardContent}>
         <View style={styles.imageContainer}>
-          {isFrontTab && image ? (
-            <Image source={{ uri: image }} style={styles.image} />
+          {cardContent[currentTab].imageUrl ? (
+            <Image source={{ uri: cardContent[currentTab].imageUrl }} style={styles.image} />
           ) : (
             <View style={styles.placeholder}>
               <Text style={styles.placeholderText}>Add Image</Text>
@@ -139,10 +144,8 @@ const handleEditImage = async () => {
         <TextInput
           style={styles.descriptionInput}
           placeholder="Description"
-          value={isFrontTab ? frontDescription : backDescription}
-          onChangeText={(text) =>
-            isFrontTab ? setFrontDescription(text) : setBackDescription(text)
-          }
+          value={cardContent[currentTab].text}
+          onChangeText={(text) => setCardSideProperty('text', text)}
         />
       </View>
 

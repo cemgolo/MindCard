@@ -9,17 +9,21 @@ import {
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import CardList from '../components/CardList';
 import SearchHeader from '../components/SearchHeader';
+import { useDispatch, useSelector } from 'react-redux';
+import { renameDeck } from '../storage/actions';
 
-const EditDeckScreen = ({ route, navigation }) => {
-  const { deck } = route.params;
-  const [deckName, setDeckName] = useState(deck.name);
-  const [isEditing, setIsEditing] = useState(false);
-  const [searchText, setSearchText] = useState('');
+const EditDeckScreen = ({ route }) => {
+  const { deckName } = route.params;
+  const deck = useSelector(state => state.decks.find(deck => deck.name === deckName));
+  const [newDeckName, setNewDeckName] = useState(deck.name); // State for deck name
+  const [isEditing, setIsEditing] = useState(false); // State for edit mode
+  const [searchText, setSearchText] = useState(''); // State for search input
+  const dispatch = useDispatch();
 
-  const handleSave = () => {
-    console.log('Updated Deck Name:', deckName);
-    setIsEditing(false);
-  };
+  const toggleEditingName = () => {
+    if (isEditing) dispatch(renameDeck(deck.name, newDeckName));
+    setIsEditing(!isEditing);
+  }
 
   return (
     <View style={styles.container}>
@@ -29,16 +33,16 @@ const EditDeckScreen = ({ route, navigation }) => {
             {isEditing ? (
               <TextInput
                 style={styles.deckNameInput}
-                value={deckName}
-                onChangeText={setDeckName}
+                value={newDeckName}
+                onChangeText={setNewDeckName}
                 autoFocus
-                onSubmitEditing={handleSave}
+                onSubmitEditing={toggleEditingName}
               />
             ) : (
-              <Text style={styles.deckName}>{deckName}</Text>
+              <Text style={styles.deckName}>{newDeckName}</Text>
             )}
             <View style={styles.headerIcons}>
-              <TouchableOpacity onPress={() => setIsEditing(!isEditing)}>
+              <TouchableOpacity onPress={toggleEditingName}>
                 <Icon
                   name={isEditing ? 'check' : 'edit'}
                   size={24}
@@ -51,12 +55,12 @@ const EditDeckScreen = ({ route, navigation }) => {
       </SearchHeader>
 
       {/* Card List */}
-      <CardList searchText={searchText} />
+      <CardList deck={deck} searchText={searchText} />
 
       {/* Floating Add Button */}
       <TouchableOpacity
         style={styles.addButton}
-        onPress={() => navigation.navigate('EditCardScreen', {deckName:deck.name, card: null} )}
+        onPress={() => navigation.navigate('EditCardScreen', { deckName: deck.name } )}
       >
         <Icon name="add" size={38} color="#fff" />
       </TouchableOpacity>

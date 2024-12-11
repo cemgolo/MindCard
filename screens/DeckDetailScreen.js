@@ -1,55 +1,52 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import PieChart from '../components/PieChart';
 import buttonStyles from '../styles/buttons';
+import { useSelector } from 'react-redux';
+import { generateSessionCards } from '../storage/helper';
+import ReviewInAdvanceDialog from '../components/dialogs/ReviewInAdvanceDialog';
+import CardStatesPieChart from '../components/CardStatesPieChart';
 
 const DeckDetailScreen = ({ route, navigation }) => {
-  const { deck } = route.params;
+  const { deckName } = route.params;
+  const deck = useSelector(state => state.decks.find(deck => deck.name === deckName));
+  
+  const sessionCards = generateSessionCards(deck);
 
-  const pieData = [
-        {
-          name: 'Failed',
-          count: deck.performance.failed,
-          color: 'red',
-          legendFontColor: '#333',
-          legendFontSize: 14,
-        },
-        {
-          name: 'Learned',
-          count: deck.performance.learned,
-          color: 'green',
-          legendFontColor: '#333',
-          legendFontSize: 14,
-        },
-        {
-          name: 'To Review',
-          count: deck.performance.toReview,
-          color: 'yellow',
-          legendFontColor: '#333',
-          legendFontSize: 14,
-        },
-      ]
+  const [isPopupVisible, setIsPopupVisible] = useState(false);
+
+  const start = () => {
+    if (Object.keys(sessionCards).length > 0) {
+      navigation.navigate('ReviewSessionScreen', { deckName });
+    } else {
+      setIsPopupVisible(true);
+    }
+  }
 
   return (
     <View style={styles.container}>
-      <Text style={styles.deckName}>{deck.name}</Text>
-      <Text style={styles.detailText}>Total Cards: {deck.totalCards}</Text>
-      <Text style={styles.detailText}>Cards Per Round: {deck.cardsPerRound || 10}</Text>
+      <Text style={styles.deckName}>{deckName}</Text>
+      <Text style={styles.detailText}>Total Cards: {deck.cards.length}</Text>
 
       {/* Pie Chart Component */}
-      <PieChart data={pieData} />
+      <CardStatesPieChart cards={sessionCards} />
 
       {/* Buttons */}
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           style={[buttonStyles.secondary, { flex: 1 }]}
-          onPress={() => navigation.navigate('EditDeckScreen', { deck: deck, })}>
+          onPress={() => navigation.navigate('EditDeckScreen', { deckName: deckName, })}>
           <Text style={buttonStyles.secondaryText}>Edit</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={[buttonStyles.primary, {flex: 3}]} onPress={() => navigation.navigate('StartScreen', { deck })}>
+        <TouchableOpacity style={[buttonStyles.primary, {flex: 3}]} onPress={start}>
           <Text style={buttonStyles.primaryText}>Start</Text>
         </TouchableOpacity>
       </View>
+      <ReviewInAdvanceDialog
+        deck={deck}
+        isOpen={isPopupVisible}
+        onClose={() => setIsPopupVisible(false)}
+        onConfirm={(reviewFromDate) => navigation.navigate('ReviewSessionScreen', { deckName, reviewFromDate })}
+      />
     </View>
   );
 };
@@ -71,13 +68,13 @@ const styles = StyleSheet.create({
   detailText: {
     fontSize: 18,
     color: '#555',
-    marginVertical: 5,
+    marginBottom: 50
   },
   buttonContainer: {
     flexDirection: 'row',
     gap: 5,
     margin: 50,
-  },
+  }
 });
 
 export default DeckDetailScreen;

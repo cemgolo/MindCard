@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { addDeck } from "../storage/actions";
+import { addEmptyDeck } from "../../storage/actions";
 import { useState } from "react";
 import { StyleSheet, Text, TextInput } from "react-native";
 import Dialog from "./Dialog";
@@ -11,13 +11,8 @@ const AddNewDeckDialog = ({ isOpen, onClose }) => {
   const handleCreateDeck = () => {
     const trimmedDeckName = deckName.trim();
     if (trimmedDeckName) {
-      dispatch(addDeck({
-        name: trimmedDeckName,
-        totalCards: 0,
-        cardsPerRound: 10,
-        performance: { seen: 0, learned: 0, failed: 0, toReview: 0 }
-      }));
-      onClose();
+      dispatch(addEmptyDeck(trimmedDeckName));
+      onClose(); // Close the modal
     } else {
       alert('Please enter a deck name!');
     }
