@@ -2,12 +2,11 @@ import { useDispatch } from "react-redux";
 import { useState } from "react";
 import { StyleSheet, Text, TextInput, View } from "react-native";
 import Dialog from "./Dialog";
+import { generateSessionCards, isDue } from "../../storage/helper";
 
-const ReviewInAdvanceDialog = ({ isOpen, onClose, deck }) => {
-  const [deckName, setDeckName] = useState('');
+const ReviewInAdvanceDialog = ({ deck, isOpen, onClose, onConfirm }) => {
   const [advanceDays, setAdvanceDays] = useState(1);
   const [advanceDaysError, setAdvanceDaysError] = useState("");
-  const dispatch = useDispatch();
 
   const confirmLearnInAdvance = () => {
     const advanceDaysNum = advanceDays === "" ? 1 : parseInt(advanceDays);
@@ -20,8 +19,7 @@ const ReviewInAdvanceDialog = ({ isOpen, onClose, deck }) => {
     date.setDate(date.getDate() + advanceDaysNum);
     
     if (deck.cards.some(card => isDue(card, date))) {
-      const newSessionCards = generateSessionCards(deck, date);
-      navigation.navigate('ReviewSessionScreen', { deckName, initialSessionCards: newSessionCards });
+      onConfirm(date);
     } else {
       setAdvanceDaysError("No cards are due until then. Please increase the time window.");
     }
@@ -32,7 +30,7 @@ const ReviewInAdvanceDialog = ({ isOpen, onClose, deck }) => {
       emoji="🎉"
       title="No cards are due!"
       isOpen={isOpen}
-      onCancel={() => { setIsPopupVisible(false); setAdvanceDaysError("") }}
+      onCancel={() => { onClose(); setAdvanceDaysError("") }}
       onConfirm={confirmLearnInAdvance}
     >
       <Text style={{textAlign: 'center'}}>You've learned all of the cards in this deck for now. Would you like to learn in advance?</Text>

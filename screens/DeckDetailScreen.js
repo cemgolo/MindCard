@@ -45,6 +45,7 @@ const DeckDetailScreen = ({ route, navigation }) => {
         deck={deck}
         isOpen={isPopupVisible}
         onClose={() => setIsPopupVisible(false)}
+        onConfirm={(reviewFromDate) => navigation.navigate('ReviewSessionScreen', { deckName, reviewFromDate })}
       />
     </View>
   );

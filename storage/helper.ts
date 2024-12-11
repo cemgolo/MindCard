@@ -31,7 +31,7 @@ function isDue(card: FlashCard, fromDate?: Date): boolean {
     return card.state === State.Learning || dueDate <= (fromDate ?? new Date());
 }
 
-function generateSessionCards(deck: FlashCardDeck, fromDate: Date) {
+function generateSessionCards(deck: FlashCardDeck, fromDate?: Date) {
     let newCardCount = 0;
 
     return deck.cards
