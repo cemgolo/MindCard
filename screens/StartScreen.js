@@ -5,7 +5,7 @@ import FlashCard from '../components/FlashCard';
 const StartScreen = ({ route, navigation }) => {
   const { deck } = route.params;
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
-  const [flipped, setFlipped] = useState(false); // Manage flipped state here
+  const [flipped, setFlipped] = useState(false);
 
   if (!deck.cards || deck.cards.length === 0) {
     return (
@@ -35,8 +35,8 @@ const StartScreen = ({ route, navigation }) => {
         front={deck.cards[currentCardIndex].front}
         back={deck.cards[currentCardIndex].back}
         flipped={flipped}
-        onFlip={toggleFlip} // Pass flip handler
-        onRate={handleRating} // Pass rating handler
+        onFlip={toggleFlip}
+        onRate={handleRating}
       />
       <Text style={styles.progress}>
         Card {currentCardIndex + 1} of {deck.cards.length}
