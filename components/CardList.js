@@ -4,14 +4,10 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { useSelector } from 'react-redux';
 
-const CardList = ({ searchText }) => {
+const CardList = ({ deck, searchText }) => {
   const navigation = useNavigation();
-  const route = useRoute();
-
-  const { deck } = route.params;
-
   const cards = useSelector((state) => {
-    const selectedDeck = state.decks.find((d) => d.name === deck.name);
+    const selectedDeck = state.decks.find(item => item.name === deck.name);
     return selectedDeck ? selectedDeck.cards : [];
   });
 

@@ -52,7 +52,7 @@ const EditDeckScreen = ({ route }) => {
       </SearchHeader>
 
       {/* Card List */}
-      <CardList searchText={searchText} />
+      <CardList deck={deck} searchText={searchText} />
 
       {/* Floating Add Button */}
       <TouchableOpacity
