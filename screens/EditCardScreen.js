@@ -19,7 +19,8 @@ const EditCardScreen = ({ route }) => {
   const { deckName, card } = route.params;
   const navigation = useNavigation();
 
-  const [image, setImage] = useState(card?.image || null);
+  const [frontImage, setFrontImage] = useState(card?.frontImage || null);
+  const [backImage, setBackImage] = useState(card?.backImage || null);
   const [frontDescription, setFrontDescription] = useState(card?.frontDescription || '');
   const [backDescription, setBackDescription] = useState(card?.backDescription || '');
   const [isFrontTab, setIsFrontTab] = useState(true);
@@ -27,8 +28,8 @@ const EditCardScreen = ({ route }) => {
   const dispatch = useDispatch();
 
   const handleSave = () => {
-    if (!frontDescription && !image) {
-      alert('Please provide at least a front description or an image.');
+    if (!frontDescription) {
+      alert('Please provide at least a front description');
       return;
     }
   
@@ -36,7 +37,8 @@ const EditCardScreen = ({ route }) => {
       ...card,
       frontDescription,
       backDescription,
-      image,
+      frontImage,
+      backImage
     };
   
     if (card?.uuid) {
@@ -51,7 +53,8 @@ const EditCardScreen = ({ route }) => {
         uuid: uuid.v4(),
         frontDescription,
         backDescription,
-        image,
+        frontImage,
+        backImage
       };
   
       dispatch({
@@ -63,58 +66,58 @@ const EditCardScreen = ({ route }) => {
     navigation.goBack();
   };
   
-const confirmDelete = () => {
-  Alert.alert(
-    'Confirm Delete',
-    'Are you sure you want to delete this card?',
-    [
-      { text: 'Cancel', style: 'cancel' },
-      { text: 'Delete', style: 'destructive', onPress: handleDelete },
-    ]
-  );
-};
+  const confirmDelete = () => {
+    Alert.alert(
+      'Confirm Delete',
+      'Are you sure you want to delete this card?',
+      [
+        { text: 'Cancel', style: 'cancel' },
+        { text: 'Delete', style: 'destructive', onPress: handleDelete },
+      ]
+    );
+  };
 
-const handleDelete = () => {
-  dispatch({
-      type: DELETE_CARD,
-      payload: { deckName, cardId: card.uuid },
-  });
-  navigation.goBack();
-};
+  const handleDelete = () => {
+    dispatch({
+        type: DELETE_CARD,
+        payload: { deckName, cardId: card.uuid },
+    });
+    navigation.goBack();
+  };
 
-const handleEditImage = async () => {
-  const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+  const handleEditImage = async () => {
+    const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
   
-  if (!permissionResult.granted) {
-    alert('Permission to access media library is required!');
-    return;
-  }
+    if (!permissionResult.granted) {
+      alert('Permission to access media library is required!');
+      return;
+    }
 
-  const result = await ImagePicker.launchImageLibraryAsync({
-    mediaTypes: ImagePicker.Images,
-    allowsEditing: true,
-    quality: 1,
-  });
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.Images,
+      allowsEditing: true,
+      quality: 1,
+    });
 
-  if (!result.canceled) {
-    setImage(result.assets[0].uri);
-  }
-};
+    if (!result.canceled) {
+      isFrontTab ? setFrontImage(result.assets[0].uri) : setBackImage(result.assets[0].uri);
+    }
+  };
   
   const handleDeleteImage = () => {
-    setImage(null);
+    isFrontTab ? setFrontImage(null) : setBackImage(null);
   };
 
   return (
     <View style={styles.container}>
-      {/* Header */}
-      <View style={styles.header}>
-        <View style={styles.headerTextContainer}>
-          <Text style={styles.headerTitle}>{deckName}</Text>
-        </View>
+    {/* Header */}
+    <View style={styles.header}>
+      <View style={styles.headerTextContainer}>
+        <Text style={styles.headerTitle}>{deckName}</Text>
       </View>
+    </View>
 
-      {/* Tab Navigation */}
+    {/* Tab Navigation */}
       <View style={styles.tabContainer}>
         <TouchableOpacity
           style={[styles.tab, isFrontTab && styles.activeTab]}
@@ -133,13 +136,24 @@ const handleEditImage = async () => {
       {/* Card Content */}
       <View style={styles.cardContent}>
         <View style={styles.imageContainer}>
-          {isFrontTab && image ? (
-            <Image source={{ uri: image }} style={styles.image} />
+          {isFrontTab ? (
+            frontImage ? (
+            <Image source={{ uri: frontImage }} style={styles.image} />
           ) : (
             <View style={styles.placeholder}>
               <Text style={styles.placeholderText}>Add Image</Text>
             </View>
-          )}
+          )
+        ) : (
+          backImage ? (
+            <Image source={{ uri: backImage }} style={styles.image} />
+          ) : (
+            <View style={styles.placeholder}>
+              <Text style={styles.placeholderText}>Add Image</Text>
+            </View>
+          )
+        )
+        }
           <TouchableOpacity style={styles.iconButton} onPress={handleEditImage}>
             <Icon name="edit" size={20} color="#fff" />
           </TouchableOpacity>

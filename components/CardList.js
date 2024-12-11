@@ -29,7 +29,7 @@ const CardList = ({ searchText }) => {
   const renderCardItem = ({ item }) => (
     <View style={styles.cardContainer}>
       <Image
-        source={item.image ? { uri: item.image } : require('../assets/placeholder.jpg')}
+        source={item.frontImage ? { uri: item.frontImage } : require('../assets/placeholder.jpg')}
         style={styles.cardImage}
       />
       <Text style={styles.cardText}>
