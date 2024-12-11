@@ -58,14 +58,14 @@ const deckReducer = (state = initialState, action) => {
       }
 
       case DELETE_CARD: {
-        const { deckName, cardId } = action.payload;
+        const { deckName, cardUuid } = action.payload;
         return {
           ...state,
           decks: state.decks.map(deck =>
             deck.name === deckName
               ? { 
                   ...deck, 
-                  cards: deck.cards.filter(card => card.uuid && card.uuid !== cardId) 
+                  cards: deck.cards.filter(card => card.uuid && card.uuid !== cardUuid) 
                 }
               : deck
           ),

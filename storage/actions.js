@@ -25,12 +25,12 @@ export const addCard = (deckName, card) => ({
     payload: { deckName, card }
 });
 
-export const deleteCard = (deckName, cardId) => ({
+export const deleteCard = (deckName, cardUuid) => ({
     type: DELETE_CARD,
-    payload: { deckName, cardId }
+    payload: { deckName, cardUuid }
 });
 
-export const updateCard = card => ({
+export const updateCard = (deckName, updatedCard) => ({
     type: UPDATE_CARD,
-    payload: card
+    payload: { deckName, updatedCard }
 });

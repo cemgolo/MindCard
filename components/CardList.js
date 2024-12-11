@@ -19,7 +19,7 @@ const CardList = ({ deck, searchText }) => {
 
 
   const handleCardPress = (card) => {
-    navigation.navigate('EditCardScreen', { deckName: deck.name, card });
+    navigation.navigate('EditCardScreen', { deckName: deck.name, cardUuid: card.uuid });
   };
 
   const renderCardItem = ({ item }) => (

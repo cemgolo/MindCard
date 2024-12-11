@@ -57,7 +57,7 @@ const EditDeckScreen = ({ route }) => {
       {/* Floating Add Button */}
       <TouchableOpacity
         style={styles.addButton}
-        onPress={() => navigation.navigate('EditCardScreen', {deckName:deck.name, card: null} )}
+        onPress={() => navigation.navigate('EditCardScreen', { deckName: deck.name } )}
       >
         <Icon name="add" size={38} color="#fff" />
       </TouchableOpacity>
