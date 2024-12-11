@@ -9,9 +9,9 @@ export const addDeck = (deck) => ({
     payload: deck
 });
 
-export const addEmptyDeck = name => ({
+export const addEmptyDeck = (name, cards) => ({
     type: ADD_EMPTY_DECK,
-    payload: name
+    payload: { name, cards }
 });
 
 export const addCard = (deckName, card) => ({
