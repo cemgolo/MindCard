@@ -36,11 +36,7 @@ const CardList = ({ searchText }) => {
         {item.frontDescription || ""}
       </Text>
       <TouchableOpacity onPress={() => handleCardPress(item)}>
-        <Icon
-          name="edit"
-          size={24}
-          color="#333"
-        />
+        <Icon name="edit" size={24} color="#333" />
       </TouchableOpacity>
     </View>
   );

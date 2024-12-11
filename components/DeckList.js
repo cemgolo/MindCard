@@ -11,8 +11,6 @@ const DeckList = ({ searchText }) => {
   const decks = useSelector(state => state.decks);
 
   const handleDeleteDeck = (deckName) => {
-    console.log(`Deleting deck: ${deckName}`);
-    console.log('Redux decks:', decks);
     dispatch({
       type: DELETE_DECK,
       payload: deckName,

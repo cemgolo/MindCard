@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Image,
   StyleSheet,
+  Alert
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -62,6 +63,16 @@ const EditCardScreen = ({ route }) => {
     navigation.goBack();
   };
   
+const confirmDelete = () => {
+  Alert.alert(
+    'Confirm Delete',
+    'Are you sure you want to delete this card?',
+    [
+      { text: 'Cancel', style: 'cancel' },
+      { text: 'Delete', style: 'destructive', onPress: handleDelete },
+    ]
+  );
+};
 
 const handleDelete = () => {
   dispatch({
@@ -148,7 +159,7 @@ const handleEditImage = async () => {
 
       {/* Buttons */}
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.deleteButton} onPress={handleDelete}>
+        <TouchableOpacity style={styles.deleteButton} onPress={confirmDelete}>
           <Text style={styles.buttonText}>Delete</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
