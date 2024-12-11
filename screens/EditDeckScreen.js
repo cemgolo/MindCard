@@ -27,6 +27,11 @@ const EditDeckScreen = ({ route, navigation }) => {
       type: UPDATE_DECK_NAME,
       payload: { oldName: deck.name, newName }
     });
+    
+    navigation.setParams({
+      deck: { ...deck, name: newName },
+    });
+
     setIsEditing(false);  // Ensure that editing mode is turned off
   };
 
