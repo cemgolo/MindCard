@@ -1,4 +1,4 @@
-import { ADD_DECK, ADD_CARD, DELETE_CARD, ADD_EMPTY_DECK, UPDATE_CARD } from "./actions";
+import { ADD_DECK, ADD_CARD, DELETE_CARD, ADD_EMPTY_DECK, UPDATE_CARD, DELETE_DECK } from "./actions";
 import { createCard, createDeck } from "./helper";
 
 /** @type import("./types").ReduxDeckState **/
@@ -31,6 +31,13 @@ const deckReducer = (state = initialState, action) => {
         return {
             ...state,
             decks: [ ...state.decks, createDeck(name, cards) ]
+        }
+      }
+
+      case DELETE_DECK: {
+        return {
+          ...state,
+          decks: state.decks.filter(deck => deck.name !== action.payload)
         }
       }
 
