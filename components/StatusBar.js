@@ -31,7 +31,7 @@ const StatusBar = () => {
 
 const styles = StyleSheet.create({
   container: {
-    marginBottom: 20, // Ensures spacing below the component
+    marginBottom: 20,
   },
   statusBar: {
     flexDirection: 'row',

@@ -8,7 +8,7 @@ import SearchHeader from '../components/SearchHeader';
 
 const HomeScreen = () => {
   const navigation = useNavigation();
-  const [searchText, setSearchText] = useState(''); // State for search input
+  const [searchText, setSearchText] = useState('');
 
   useEffect(() => {
     // Set the title for the header when the screen is rendered
@@ -48,13 +48,13 @@ const styles = StyleSheet.create({
   },
   headerRow: {
     flexDirection: 'row',
-    alignItems: 'center', // Align items vertically in the center
+    alignItems: 'center',
   },
   headerTitle: {
     fontSize: 24,
     fontWeight: 'bold',
     color: '#333',
-    marginRight: 10, // Add spacing between the app name and screen name
+    marginRight: 10,
   },
   screenName: {
     fontSize: 18,

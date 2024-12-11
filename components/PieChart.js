@@ -16,10 +16,10 @@ const PieChart = ({ data, title, height = 220 }) => {
           backgroundGradientTo: '#f4f4f4',
           color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
         }}
-        accessor="count" // Key to determine value
+        accessor="count"
         backgroundColor="transparent"
         paddingLeft="15"
-        absolute // Show absolute values
+        absolute
       />
     </View>
   );

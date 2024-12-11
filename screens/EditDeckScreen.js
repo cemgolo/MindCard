@@ -19,7 +19,7 @@ const EditDeckScreen = ({ route }) => {
   const [searchText, setSearchText] = useState(''); // State for search input
 
   const handleSave = () => {
-    setIsEditing(false); // Exit edit mode
+    setIsEditing(false);
   };
 
   return (
@@ -33,7 +33,7 @@ const EditDeckScreen = ({ route }) => {
                 value={newDeckName}
                 onChangeText={setNewDeckName}
                 autoFocus
-                onSubmitEditing={handleSave} // Save on pressing Enter
+                onSubmitEditing={handleSave}
               />
             ) : (
               <Text style={styles.deckName}>{newDeckName}</Text>
@@ -57,7 +57,7 @@ const EditDeckScreen = ({ route }) => {
       {/* Floating Add Button */}
       <TouchableOpacity
         style={styles.addButton}
-        onPress={() => console.log('Add new card')} // demo button 
+        onPress={() => navigation.navigate('EditCardScreen', {deckName:deck.name, card: null} )}
       >
         <Icon name="add" size={38} color="#fff" />
       </TouchableOpacity>

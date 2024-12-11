@@ -7,11 +7,11 @@ const SearchHeader = ({children, style, outerStyle, searchText, setSearchText, p
 
   const toggleSearch = () => {
     if(isSearching) setSearchText('');
-    setIsSearching(!isSearching); // Toggle search mode
+    setIsSearching(!isSearching);
   };
 
   const handleSearchChange = (text) => {
-    setSearchText(text); // Update search input state
+    setSearchText(text);
   };
 
   return (
