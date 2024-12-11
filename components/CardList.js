@@ -23,24 +23,8 @@ const CardList = ({ deck, searchText }) => {
   };
 
   const renderCardItem = ({ item }) => (
-    <View style={styles.cardContainer}>
-      <Image
-        source={item.image ? { uri: item.image } : require('../assets/placeholder.jpg')}
-        style={styles.cardImage}
-      />
-      <Text style={styles.cardText}>
-        {item.frontDescription || ""}
-      </Text>
-      <TouchableOpacity onPress={() => handleCardPress(item)}>
-        <Icon
-          name="edit"
-          size={24}
-          color="#333"
-        />
-      </TouchableOpacity>
-    </View>
+    <CardItem card={item} onPress={() => handleCardPress(item)} />
   );
-  
 
   return (
     <FlatList
@@ -50,6 +34,27 @@ const CardList = ({ deck, searchText }) => {
     />
   );
 };
+
+const CardItem = ({ card, onPress }) => {
+  return (
+    <View style={styles.cardContainer}>
+      <Image
+        source={card.content.front.imageUrl ? { uri: card.content.front.imageUrl } : require('../assets/placeholder.jpg')}
+        style={styles.cardImage}
+      />
+      <Text style={styles.cardText}>
+        {card.content.front.text || ""}
+      </Text>
+      <TouchableOpacity onPress={onPress}>
+        <Icon
+          name="edit"
+          size={24}
+          color="#333"
+        />
+      </TouchableOpacity>
+    </View>
+  )
+}
 
 const styles = StyleSheet.create({
   cardList: {
