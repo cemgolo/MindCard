@@ -6,14 +6,14 @@ import buttonStyles from '../styles/buttons';
 
 const screenWidth = Dimensions.get('window').width;
 
-const ReviewRoundScreen = ({ navigation, route }) => {
-  const { performanceData, deck } = route.params;
+const ReviewSessionEndScreen = ({ navigation, route }) => {
+  const { deckName, userRatings } = route.params;
 
   const data = {
-    labels: ['Fail', 'Slow', 'Average', 'Fast'],
+    labels: Object.keys(userRatings),
     datasets: [
       {
-        data: performanceData,
+        data: Object.values(userRatings),
       },
     ],
   };
@@ -44,7 +44,7 @@ const ReviewRoundScreen = ({ navigation, route }) => {
         <TouchableOpacity style={[buttonStyles.secondary, {flex: 1}]} onPress={() => navigation.popToTop()}>
             <Text style={buttonStyles.secondaryText}>Home</Text>
           </TouchableOpacity>      
-          <TouchableOpacity style={[buttonStyles.primary, {flex: 1.5}]} onPress={() => navigation.popTo("DeckDetail", {deck})}>
+          <TouchableOpacity style={[buttonStyles.primary, {flex: 1.5}]} onPress={() => navigation.popTo("DeckDetail", { deckName })}>
             <Text style={buttonStyles.primaryText}>Again</Text>
           </TouchableOpacity>
       </View>
@@ -70,4 +70,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ReviewRoundScreen;
+export default ReviewSessionEndScreen;

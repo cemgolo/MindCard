@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import AddNewDeckDialog from './AddNewDeckDialog';
+import AddNewDeckDialog from './dialogs/AddNewDeckDialog';
 
 const AddButton = () => {
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
