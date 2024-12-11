@@ -1,4 +1,4 @@
-import { ADD_DECK, ADD_CARD, DELETE_CARD, ADD_EMPTY_DECK, UPDATE_CARD, DELETE_DECK } from "./actions";
+import { ADD_DECK, ADD_CARD, DELETE_CARD, ADD_EMPTY_DECK, UPDATE_CARD, DELETE_DECK, RENAME_DECK } from "./actions";
 import { createCard, createDeck } from "./helper";
 
 /** @type import("./types").ReduxDeckState **/
@@ -38,6 +38,17 @@ const deckReducer = (state = initialState, action) => {
         return {
           ...state,
           decks: state.decks.filter(deck => deck.name !== action.payload)
+        }
+      }
+
+      case RENAME_DECK: {
+        const { oldName, newName } = action.payload;
+        return {
+          ...state,
+          decks: state.decks.map(deck => ({
+            ...deck,
+            name: deck.name === oldName ? newName : deck.name,
+          }))
         }
       }
 
