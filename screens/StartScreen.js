@@ -28,12 +28,17 @@ const StartScreen = ({ route, navigation }) => {
     setFlipped(!flipped);
   };
 
+  const currentCard = deck.cards[currentCardIndex];
+  console.log(currentCard); // Add this line to log the current card object
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{deck.name}</Text>
       <FlashCard
-        front={deck.cards[currentCardIndex].front}
-        back={deck.cards[currentCardIndex].back}
+        front={currentCard.frontDescription}
+        back={currentCard.backDescription}
+        frontImage={currentCard.frontImage}  // Pass the front image URI
+        backImage={currentCard.backImage}  // Pass the back image URI
         flipped={flipped}
         onFlip={toggleFlip}
         onRate={handleRating}

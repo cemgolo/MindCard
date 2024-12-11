@@ -1,4 +1,4 @@
-import { ADD_DECK, ADD_CARD, DELETE_CARD, ADD_EMPTY_DECK, UPDATE_CARD, DELETE_DECK } from "./actions";
+import { ADD_DECK, ADD_CARD, DELETE_CARD, ADD_EMPTY_DECK, UPDATE_CARD, UPDATE_DECK_NAME, DELETE_DECK } from "./actions";
 
 const initialState = {
   decks: [
@@ -93,15 +93,30 @@ const deckReducer = (state = initialState, action) => {
               : deck
           ),
         };
-      }
+    }
+
+      case UPDATE_DECK_NAME: {
+        const { oldName, newName } = action.payload;
+      
+        const updatedState = {
+          ...state,
+          decks: state.decks.map((deck) =>
+            deck.name === oldName ? { ...deck, name: newName } : deck
+          ),
+        };
+      
+        return updatedState;
+    }
+    
+
       case DELETE_DECK: {
         const updatedDecks = state.decks.filter((deck) => deck.name !== action.payload);
         return {
           ...state,
           decks: updatedDecks,
         };
-      }
-
+    }
+    
       default:
         return state;
       
