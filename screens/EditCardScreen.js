@@ -7,17 +7,16 @@ import {
   Image,
   StyleSheet,
 } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import * as ImagePicker from 'expo-image-picker';
 import { useDispatch, useSelector } from 'react-redux';
 import { addCard, deleteCard, updateCard } from '../storage/actions';
-import { createCard, createDeck } from '../storage/helper';
+import { createCard } from '../storage/helper';
 
 const EditCardScreen = ({ route, navigation }) => {
   const { deckUuid, cardUuid } = route.params;
 
-  const deck = useSelector(state => state.decks.find(deck => deck.uuid = deckUuid));
+  const deck = useSelector(state => state.decks.find(deck => deck.uuid === deckUuid));
   const card = deck?.cards.find(card => card.uuid === cardUuid) ?? createCard();
   useEffect(() => navigation.setOptions({'title': deck.name}), [navigation, deck]);
 
