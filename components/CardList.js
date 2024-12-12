@@ -7,7 +7,8 @@ const CardList = ({ deck, searchText }) => {
   const navigation = useNavigation();
   const filteredCards = searchText
     ? deck.cards.filter(card =>
-        card.frontDescription.toLowerCase().includes(searchText.toLowerCase())
+        card.content.front.text.toLowerCase().includes(searchText.toLowerCase())
+        || card.content.back.text.toLowerCase().includes(searchText.toLowerCase())
       )
     : deck.cards;
 
