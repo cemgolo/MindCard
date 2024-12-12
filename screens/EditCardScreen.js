@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import {
   View,
   Text,
@@ -18,7 +18,6 @@ const EditCardScreen = ({ route, navigation }) => {
 
   const deck = useSelector(state => state.decks.find(deck => deck.uuid === deckUuid));
   const card = deck?.cards.find(card => card.uuid === cardUuid) ?? createCard();
-  useEffect(() => navigation.setOptions({'title': deck.name}), [navigation, deck]);
 
   const [isFrontTab, setIsFrontTab] = useState(true);
   const currentTab = useMemo(() => isFrontTab ? 'front' : 'back', [isFrontTab]);

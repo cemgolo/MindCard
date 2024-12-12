@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -15,7 +15,6 @@ import { renameDeck } from '../storage/actions';
 const EditDeckScreen = ({ route, navigation }) => {
   const { deckUuid } = route.params;
   const deck = useSelector(state => state.decks.find(deck => deck.uuid === deckUuid));
-  useEffect(() => navigation.setOptions({'title': deck.name}), [navigation, deck]);
 
   const [newDeckName, setNewDeckName] = useState(deck.name); // State for deck name
   const [isEditing, setIsEditing] = useState(false); // State for edit mode

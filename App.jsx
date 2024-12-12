@@ -22,8 +22,8 @@ const App = () => {
             <Stack.Screen name="Home" component={HomeScreen} />
             <Stack.Screen name="DeckDetail" component={DeckDetailScreen} />
             <Stack.Screen name="ReviewSessionScreen" component={ReviewSessionScreen} />
-            <Stack.Screen name="EditDeckScreen" component={EditDeckScreen} />
-            <Stack.Screen name="EditCardScreen" component={EditCardScreen} />
+            <Stack.Screen name="EditDeckScreen" component={EditDeckScreen} options={() => ({title: 'Edit Deck'})} />
+            <Stack.Screen name="EditCardScreen" component={EditCardScreen} options={() => ({title: 'Edit Card'})} />
             <Stack.Screen name="ReviewSessionEndScreen" component={ReviewSessionEndScreen} />
           </Stack.Navigator>
         </NavigationContainer>
