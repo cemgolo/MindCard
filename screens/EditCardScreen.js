@@ -121,17 +121,19 @@ const EditCardScreen = ({ route, navigation }) => {
       <View style={styles.cardContent}>
         <View style={styles.imageContainer}>
           {cardContent[currentTab].imageUrl ? (
-            <Image source={{ uri: cardContent[currentTab].imageUrl }} style={styles.image} />
+            <View>
+              <Image source={{ uri: cardContent[currentTab].imageUrl }} style={styles.image} />
+              <TouchableOpacity style={styles.deleteIconButton} onPress={handleDeleteImage}>
+                <Icon name="delete" size={20} color="#fff" />
+              </TouchableOpacity>
+            </View>
           ) : (
             <View style={styles.placeholder}>
               <Text style={styles.placeholderText}>Add Image</Text>
             </View>
           )}
           <TouchableOpacity style={styles.iconButton} onPress={handleEditImage}>
-            <Icon name="edit" size={20} color="#fff" />
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.deleteIconButton} onPress={handleDeleteImage}>
-            <Icon name="delete" size={20} color="#fff" />
+            <Icon name={cardContent[currentTab].imageUrl ? "edit" : "add"} size={20} color="#fff" />
           </TouchableOpacity>
         </View>
         <TextInput
