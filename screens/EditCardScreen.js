@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import {
   View,
   Text,
@@ -11,19 +11,15 @@ import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import * as ImagePicker from 'expo-image-picker';
 import { useDispatch, useSelector } from 'react-redux';
-import { ADD_CARD, addCard, DELETE_CARD, deleteCard, UPDATE_CARD, updateCard } from '../storage/actions';
-import { createCard } from '../storage/helper';
+import { addCard, deleteCard, updateCard } from '../storage/actions';
+import { createCard, createDeck } from '../storage/helper';
 
-const EditCardScreen = ({ route }) => {
-  const { deckName, cardUuid } = route.params;
-  const navigation = useNavigation();
+const EditCardScreen = ({ route, navigation }) => {
+  const { deckUuid, cardUuid } = route.params;
 
-  const card = useSelector(state =>
-    state.decks
-      .find(deck => deck.name === deckName)
-      .cards
-      .find(card => card.uuid === cardUuid)
-  ) ?? createCard();
+  const deck = useSelector(state => state.decks.find(deck => deck.uuid = deckUuid));
+  const card = deck?.cards.find(card => card.uuid === cardUuid) ?? createCard();
+  useEffect(() => navigation.setOptions({'title': deck.name}), [navigation, deck]);
 
   const [isFrontTab, setIsFrontTab] = useState(true);
   const currentTab = useMemo(() => isFrontTab ? 'front' : 'back', [isFrontTab]);
@@ -59,11 +55,11 @@ const EditCardScreen = ({ route }) => {
   
     if (card?.uuid) {
       // Update the card
-      dispatch(updateCard(deckName, { ...card, content: cardContent }));
+      dispatch(updateCard(deckUuid, { ...card, content: cardContent }));
     } else {
       // Create a new card
       const newCard = createCard(cardContent.front, cardContent.back);
-      dispatch(addCard(deckName, newCard));
+      dispatch(addCard(deckUuid, newCard));
     }
   
     navigation.goBack();
@@ -72,7 +68,7 @@ const EditCardScreen = ({ route }) => {
 
   const handleDelete = () => {
     navigation.goBack();
-    dispatch(deleteCard(deckName, card.uuid));
+    dispatch(deleteCard(deckUuid, card.uuid));
   };
 
   const handleEditImage = async () => {
@@ -103,7 +99,7 @@ const EditCardScreen = ({ route }) => {
       {/* Header */}
       <View style={styles.header}>
         <View style={styles.headerTextContainer}>
-          <Text style={styles.headerTitle}>{deckName}</Text>
+          <Text style={styles.headerTitle}>{deck.name}</Text>
         </View>
       </View>
 

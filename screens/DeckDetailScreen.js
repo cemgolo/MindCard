@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import buttonStyles from '../styles/buttons';
 import { useSelector } from 'react-redux';
@@ -7,8 +7,9 @@ import ReviewInAdvanceDialog from '../components/dialogs/ReviewInAdvanceDialog';
 import CardStatesPieChart from '../components/CardStatesPieChart';
 
 const DeckDetailScreen = ({ route, navigation }) => {
-  const { deckName } = route.params;
-  const deck = useSelector(state => state.decks.find(deck => deck.name === deckName));
+  const { deckUuid } = route.params;
+  const deck = useSelector(state => state.decks.find(deck => deck.uuid === deckUuid));
+  useEffect(() => navigation.setOptions({'title': deck.name}), [navigation, deck]);
   
   const sessionCards = generateSessionCards(deck);
 
@@ -16,7 +17,7 @@ const DeckDetailScreen = ({ route, navigation }) => {
 
   const start = () => {
     if (Object.keys(sessionCards).length > 0) {
-      navigation.navigate('ReviewSessionScreen', { deckName });
+      navigation.navigate('ReviewSessionScreen', { deckUuid });
     } else {
       setIsPopupVisible(true);
     }
@@ -24,7 +25,7 @@ const DeckDetailScreen = ({ route, navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.deckName}>{deckName}</Text>
+      <Text style={styles.deckName}>{deck.name}</Text>
       <Text style={styles.detailText}>Total Cards: {deck.cards.length}</Text>
 
       {/* Pie Chart Component */}
@@ -34,7 +35,7 @@ const DeckDetailScreen = ({ route, navigation }) => {
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           style={[buttonStyles.secondary, { flex: 1 }]}
-          onPress={() => navigation.navigate('EditDeckScreen', { deckName: deckName, })}>
+          onPress={() => navigation.navigate('EditDeckScreen', { deckUuid })}>
           <Text style={buttonStyles.secondaryText}>Edit</Text>
         </TouchableOpacity>
         <TouchableOpacity style={[buttonStyles.primary, {flex: 3}]} onPress={start}>
@@ -45,7 +46,7 @@ const DeckDetailScreen = ({ route, navigation }) => {
         deck={deck}
         isOpen={isPopupVisible}
         onClose={() => setIsPopupVisible(false)}
-        onConfirm={(reviewFromDate) => navigation.navigate('ReviewSessionScreen', { deckName, reviewFromDate })}
+        onConfirm={(reviewFromDate) => navigation.navigate('ReviewSessionScreen', { deckUuid, reviewFromDate })}
       />
     </View>
   );

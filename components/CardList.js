@@ -1,25 +1,18 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, FlatList, Image } from 'react-native';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { useSelector } from 'react-redux';
 
 const CardList = ({ deck, searchText }) => {
   const navigation = useNavigation();
-  const cards = useSelector((state) => {
-    const selectedDeck = state.decks.find(item => item.name === deck.name);
-    return selectedDeck ? selectedDeck.cards : [];
-  });
-
   const filteredCards = searchText
-  ? cards.filter(card =>
-      card.frontDescription.toLowerCase().includes(searchText.toLowerCase())
-    )
-  : cards;
-
+    ? deck.cards.filter(card =>
+        card.frontDescription.toLowerCase().includes(searchText.toLowerCase())
+      )
+    : deck.cards;
 
   const handleCardPress = (card) => {
-    navigation.navigate('EditCardScreen', { deckName: deck.name, cardUuid: card.uuid });
+    navigation.navigate('EditCardScreen', { deckUuid: deck.uuid, cardUuid: card.uuid });
   };
 
   const renderCardItem = ({ item }) => (

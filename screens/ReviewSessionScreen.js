@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import FlashCard from '../components/FlashCard';
 import { useDispatch, useSelector } from 'react-redux';
@@ -30,8 +30,10 @@ function addCardToSession(sessionCards, card) {
 }
 
 const ReviewSessionScreen = ({ route, navigation }) => {
-  const { deckName, reviewFromDate } = route.params;
-  const deck = useSelector(state => state.decks.find(deck => deck.name === deckName));
+  const { deckUuid, reviewFromDate } = route.params;
+  const deck = useSelector(state => state.decks.find(deck => deck.uuid === deckUuid));
+  useEffect(() => navigation.setOptions({'title': deck.name}), [navigation, deck]);
+
   const [sessionCards, setSessionCards] = useState(generateSessionCards(deck, reviewFromDate));
   const [userRatings, setUserRatings] = useState(cardReviewRatings.reduce((acc, rating) => ({...acc, [rating.label]: 0}), {}));
   
@@ -57,7 +59,7 @@ const ReviewSessionScreen = ({ route, navigation }) => {
       setCurrentCard(pickRandomCard(newSessionCards));
       setFlipped(false); // Reset flipped state when moving to the next card
     } else {
-      navigation.navigate('ReviewSessionEndScreen', { deckName, userRatings: newRatings });
+      navigation.navigate('ReviewSessionEndScreen', { deckUuid, userRatings: newRatings });
     }
   };
 

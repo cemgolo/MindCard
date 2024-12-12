@@ -12,7 +12,6 @@ import ReviewSessionEndScreen from './screens/ReviewSessionResultsScreen';
 import { deckStore, deckPersistor } from './storage/persist-storage';
 
 const Stack = createStackNavigator();
-const useDeckNameAsTitle = ({ route }) => ({ title: route.params?.deckName ?? route.name });
 
 const App = () => {
   return (
@@ -21,11 +20,11 @@ const App = () => {
         <NavigationContainer>
           <Stack.Navigator initialRouteName="Home">
             <Stack.Screen name="Home" component={HomeScreen} />
-            <Stack.Screen name="DeckDetail" component={DeckDetailScreen} options={useDeckNameAsTitle} />
-            <Stack.Screen name="ReviewSessionScreen" component={ReviewSessionScreen} options={useDeckNameAsTitle} />
-            <Stack.Screen name="EditDeckScreen" component={EditDeckScreen} options={useDeckNameAsTitle} />
-            <Stack.Screen name="EditCardScreen" component={EditCardScreen} options={useDeckNameAsTitle} />
-            <Stack.Screen name="ReviewSessionEndScreen" component={ReviewSessionEndScreen} options={useDeckNameAsTitle} />
+            <Stack.Screen name="DeckDetail" component={DeckDetailScreen} />
+            <Stack.Screen name="ReviewSessionScreen" component={ReviewSessionScreen} />
+            <Stack.Screen name="EditDeckScreen" component={EditDeckScreen} />
+            <Stack.Screen name="EditCardScreen" component={EditCardScreen} />
+            <Stack.Screen name="ReviewSessionEndScreen" component={ReviewSessionEndScreen} />
           </Stack.Navigator>
         </NavigationContainer>
       </PersistGate>

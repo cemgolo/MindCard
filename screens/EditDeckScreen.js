@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -12,16 +12,18 @@ import SearchHeader from '../components/SearchHeader';
 import { useDispatch, useSelector } from 'react-redux';
 import { renameDeck } from '../storage/actions';
 
-const EditDeckScreen = ({ route }) => {
-  const { deckName } = route.params;
-  const deck = useSelector(state => state.decks.find(deck => deck.name === deckName));
+const EditDeckScreen = ({ route, navigation }) => {
+  const { deckUuid } = route.params;
+  const deck = useSelector(state => state.decks.find(deck => deck.uuid === deckUuid));
+  useEffect(() => navigation.setOptions({'title': deck.name}), [navigation, deck]);
+
   const [newDeckName, setNewDeckName] = useState(deck.name); // State for deck name
   const [isEditing, setIsEditing] = useState(false); // State for edit mode
   const [searchText, setSearchText] = useState(''); // State for search input
   const dispatch = useDispatch();
 
   const toggleEditingName = () => {
-    if (isEditing) dispatch(renameDeck(deck.name, newDeckName));
+    if (isEditing) dispatch(renameDeck(deck.uuid, newDeckName));
     setIsEditing(!isEditing);
   }
 
@@ -60,7 +62,7 @@ const EditDeckScreen = ({ route }) => {
       {/* Floating Add Button */}
       <TouchableOpacity
         style={styles.addButton}
-        onPress={() => navigation.navigate('EditCardScreen', { deckName: deck.name } )}
+        onPress={() => navigation.navigate('EditCardScreen', { deckUuid } )}
       >
         <Icon name="add" size={38} color="#fff" />
       </TouchableOpacity>

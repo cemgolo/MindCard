@@ -42,23 +42,23 @@ const deckReducer = (state = initialState, action) => {
       }
 
       case RENAME_DECK: {
-        const { oldName, newName } = action.payload;
+        const { deckUuid, newName } = action.payload;
         return {
           ...state,
           decks: state.decks.map(deck => ({
             ...deck,
-            name: deck.name === oldName ? newName : deck.name,
+            name: deck.uuid === deckUuid ? newName : deck.name,
           }))
         }
       }
 
       case ADD_CARD: {
-        const { deckName, card } = action.payload;
+        const { deckUuid, card } = action.payload;
   
         return {
           ...state,
           decks: state.decks.map((deck) =>
-            deck.name === deckName
+            deck.uuid === deckUuid
               ? {
                   ...deck,
                   cards: [...(deck.cards || []), card] 
@@ -69,11 +69,11 @@ const deckReducer = (state = initialState, action) => {
       }
 
       case DELETE_CARD: {
-        const { deckName, cardUuid } = action.payload;
+        const { deckUuid, cardUuid } = action.payload;
         return {
           ...state,
           decks: state.decks.map(deck =>
-            deck.name === deckName
+            deck.uuid === deckUuid
               ? { 
                   ...deck, 
                   cards: deck.cards.filter(card => card.uuid && card.uuid !== cardUuid) 
@@ -84,11 +84,11 @@ const deckReducer = (state = initialState, action) => {
       }
 
       case UPDATE_CARD: {
-        const { deckName, updatedCard } = action.payload;
+        const { deckUuid, updatedCard } = action.payload;
         return {
           ...state,
           decks: state.decks.map((deck) =>
-            deck.name === deckName
+            deck.uuid === deckUuid
               ? {
                   ...deck,
                   cards: deck.cards.map((card) =>

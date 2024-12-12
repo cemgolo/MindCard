@@ -16,27 +16,27 @@ export const addEmptyDeck = (name, cards) => ({
     payload: { name, cards }
 });
 
-export const renameDeck = (oldName, newName) => ({
+export const renameDeck = (deckUuid, newName) => ({
     type: RENAME_DECK,
-    payload: { oldName, newName }
+    payload: { deckUuid, newName }
 });
 
-export const deleteDeck = (deckName) => ({
+export const deleteDeck = (deckUuid) => ({
     type: DELETE_DECK,
-    payload: deckName
+    payload: deckUuid
 });
 
-export const addCard = (deckName, card) => ({
+export const addCard = (deckUuid, card) => ({
     type: ADD_CARD,
-    payload: { deckName, card }
+    payload: { deckUuid, card }
 });
 
-export const deleteCard = (deckName, cardUuid) => ({
+export const deleteCard = (deckUuid, cardUuid) => ({
     type: DELETE_CARD,
-    payload: { deckName, cardUuid }
+    payload: { deckUuid, cardUuid }
 });
 
-export const updateCard = (deckName, updatedCard) => ({
+export const updateCard = (deckUuid, updatedCard) => ({
     type: UPDATE_CARD,
-    payload: { deckName, updatedCard }
+    payload: { deckUuid, updatedCard }
 });

@@ -23,6 +23,7 @@ interface FlashCard extends Card {
 }
 
 interface FlashCardDeck {
+    uuid: string;
     name: string;
     cards: FlashCard[];
     lastSessionDate: Date;

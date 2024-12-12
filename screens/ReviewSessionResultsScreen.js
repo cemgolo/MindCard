@@ -1,13 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { BarChart } from 'react-native-chart-kit';
 import { Dimensions } from 'react-native';
 import buttonStyles from '../styles/buttons';
+import { useSelector } from 'react-redux';
 
 const screenWidth = Dimensions.get('window').width;
 
-const ReviewSessionEndScreen = ({ navigation, route }) => {
-  const { deckName, userRatings } = route.params;
+const ReviewSessionEndScreen = ({ route, navigation }) => {
+  const { deckUuid, userRatings } = route.params;
+  const deck = useSelector(state => state.decks.find(deck => deck.uuid === deckUuid));
+  useEffect(() => navigation.setOptions({'title': deck.name}), [navigation, deck]);
 
   const data = {
     labels: Object.keys(userRatings),
@@ -44,7 +47,7 @@ const ReviewSessionEndScreen = ({ navigation, route }) => {
         <TouchableOpacity style={[buttonStyles.secondary, {flex: 1}]} onPress={() => navigation.popToTop()}>
             <Text style={buttonStyles.secondaryText}>Home</Text>
           </TouchableOpacity>      
-          <TouchableOpacity style={[buttonStyles.primary, {flex: 1.5}]} onPress={() => navigation.popTo("DeckDetail", { deckName })}>
+          <TouchableOpacity style={[buttonStyles.primary, {flex: 1.5}]} onPress={() => navigation.popTo("DeckDetail", { deckUuid })}>
             <Text style={buttonStyles.primaryText}>Again</Text>
           </TouchableOpacity>
       </View>

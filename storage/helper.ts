@@ -18,6 +18,7 @@ function createCard(
 
 function createDeck(name: string, cards: FlashCard[] = []): FlashCardDeck {
     return {
+        uuid: uuid.v4(),
         name: name,
         cards: cards,
         lastSessionDate: new Date(),
