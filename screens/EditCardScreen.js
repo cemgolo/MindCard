@@ -12,7 +12,6 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import * as ImagePicker from 'expo-image-picker';
 import { useDispatch, useSelector } from 'react-redux';
 import { ADD_CARD, addCard, DELETE_CARD, deleteCard, UPDATE_CARD, updateCard } from '../storage/actions';
-import uuid from 'react-native-uuid';
 import { createCard } from '../storage/helper';
 
 const EditCardScreen = ({ route }) => {
@@ -24,7 +23,7 @@ const EditCardScreen = ({ route }) => {
       .find(deck => deck.name === deckName)
       .cards
       .find(card => card.uuid === cardUuid)
-  );
+  ) ?? createCard();
 
   const [isFrontTab, setIsFrontTab] = useState(true);
   const currentTab = useMemo(() => isFrontTab ? 'front' : 'back', [isFrontTab]);
@@ -72,8 +71,8 @@ const EditCardScreen = ({ route }) => {
   
 
   const handleDelete = () => {
-    dispatch(deleteCard(deckName, card.uuid));
     navigation.goBack();
+    dispatch(deleteCard(deckName, card.uuid));
   };
 
   const handleEditImage = async () => {
