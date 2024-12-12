@@ -41,7 +41,7 @@ const ReviewSessionScreen = ({ route, navigation }) => {
   const dispatch = useDispatch();
 
   const [currentCard, setCurrentCard] = useState(pickRandomCard(sessionCards));
-  const [flipped, setFlipped] = useState(false); // Manage flipped state here
+  const [isFlipped, setIsFlipped] = useState(false); // Manage flipped state here
 
   const handleRating = (rating) => {
     const ratingLabel = cardReviewRatings.find(item => item.action === rating).label;
@@ -57,23 +57,22 @@ const ReviewSessionScreen = ({ route, navigation }) => {
     if (Object.keys(newSessionCards).length > 0) {
       setSessionCards(newSessionCards);
       setCurrentCard(pickRandomCard(newSessionCards));
-      setFlipped(false); // Reset flipped state when moving to the next card
+      setIsFlipped(false); // Reset flipped state when moving to the next card
     } else {
       navigation.navigate('ReviewSessionEndScreen', { deckUuid, userRatings: newRatings });
     }
   };
 
   const toggleFlip = () => {
-    setFlipped(!flipped);
+    setIsFlipped(!isFlipped);
   };
 
   return (
     <View style={{flex: 1}}>
       <ReviewSessionCardStateBar sessionCards={sessionCards} />
       <FlashCard
-        front={currentCard.content.front}
-        back={currentCard.content.back}
-        flipped={flipped}
+        content={currentCard.content}
+        isFlipped={isFlipped}
         onFlip={toggleFlip} // Pass flip handler
         onRate={handleRating} // Pass rating handler
       />

@@ -1,19 +1,22 @@
-import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import React, { useMemo } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import RatingButtons from './RatingButtons';
 
-const FlashCard = ({ front, back, flipped, onFlip, onRate }) => {
+const FlashCard = ({ content, isFlipped, onFlip, onRate }) => {
+  const side = useMemo(() => isFlipped ? 'front' : 'back', [isFlipped]);
+  
   return (
     <View style={styles.cardContainer}>
       <View style={styles.card}>
-        <Text style={styles.cardText}>{flipped ? back.text : front.text}</Text>
+        {content[side].imageUrl && <Image source={{ uri: content[side].imageUrl }} />}
+        <Text style={styles.cardText}>{content[side].text}</Text>
       </View>
-      {!flipped ? (
+      {isFlipped ? (
+        <RatingButtons onRate={onRate} />
+      ) : (
         <TouchableOpacity style={styles.flipButton} onPress={onFlip}>
           <Text style={styles.flipButtonText}>Flip card</Text>
         </TouchableOpacity>
-      ) : (
-        <RatingButtons onRate={onRate} />
       )}
     </View>
   );
