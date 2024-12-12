@@ -145,9 +145,9 @@ const EditCardScreen = ({ route, navigation }) => {
 
       {/* Buttons */}
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.deleteButton} onPress={handleDelete}>
+        {cardUuid && <TouchableOpacity style={styles.deleteButton} onPress={handleDelete}>
           <Text style={styles.buttonText}>Delete</Text>
-        </TouchableOpacity>
+        </TouchableOpacity>}
         <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
           <Text style={styles.buttonText}>Save</Text>
         </TouchableOpacity>
