@@ -51,7 +51,7 @@ const ReviewSessionScreen = ({ route, navigation }) => {
     let newSessionCards = removeCardFromSession(sessionCards, currentCard);
 
     const newCard = fsrs.repeat(currentCard, new Date())[rating].card;
-    dispatch(updateCard(newCard));
+    dispatch(updateCard(deckUuid, newCard));
     if (isDue(newCard)) newSessionCards = addCardToSession(newSessionCards, newCard);
 
     if (Object.keys(newSessionCards).length > 0) {
