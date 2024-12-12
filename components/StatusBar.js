@@ -1,8 +1,19 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { useSelector } from 'react-redux';
+import { cardStateColors } from '../storage/helper';
+import { State } from 'ts-fsrs';
 
 const StatusBar = () => {
   const [showStatusText, setShowStatusText] = useState(false);
+  const decks = useSelector(state => state.decks);
+  const cardStates = decks.map(deck => deck.cards).flat(1).map(card => card.state);
+  const cardStateCounts = cardStates.reduce((acc, curr) => {
+    acc[curr] ? ++acc[curr] : acc[curr] = 1;
+    return acc;
+  }, {});
+
+  const statusText = Object.entries(cardStateCounts).map(([state, cardCount]) => `${State[state]}: ${cardCount}`).join(' / ');
 
   const toggleStatusText = () => {
     setShowStatusText(!showStatusText);
@@ -13,16 +24,16 @@ const StatusBar = () => {
       {/* Status Bar */}
       <TouchableOpacity onPress={toggleStatusText}>
         <View style={styles.statusBar}>
-          <View style={[styles.statusSegment, { backgroundColor: '#ff6666', flex: 144 }]} />
-          <View style={[styles.statusSegment, { backgroundColor: '#ffd966', flex: 130 }]} />
-          <View style={[styles.statusSegment, { backgroundColor: '#66cc66', flex: 300 }]} />
+          {Object.entries(cardStateCounts).map(([state, cardCount]) => 
+            <View key={state} style={[styles.statusSegment, { backgroundColor: cardStateColors[state], flex: cardCount }]} />
+          )}
         </View>
       </TouchableOpacity>
 
       {/* Status Text Box (Speech Bubble) */}
       {showStatusText && (
         <View style={styles.speechBox}>
-          <Text style={styles.speechText}>144 learning / 130 to review / 300 learned</Text>
+          <Text style={styles.speechText}>{statusText}</Text>
         </View>
       )}
     </View>
