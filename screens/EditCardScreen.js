@@ -51,13 +51,13 @@ const EditCardScreen = ({ route, navigation }) => {
       return;
     }
   
-    if (deckUuid) {
+    if (cardUuid) {
+      // Update the card
+      dispatch(updateCard(deckUuid, { ...card, content: cardContent }));
+    } else {
       // Create a new card
       const newCard = createCard(cardContent.front, cardContent.back);
       dispatch(addCard(deckUuid, newCard));
-    } else {
-      // Update the card
-      dispatch(updateCard(deckUuid, { ...card, content: cardContent }));
     }
   
     navigation.goBack();
