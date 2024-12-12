@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import RatingButtons from './RatingButtons';
 
 const FlashCard = ({ content, isFlipped, onFlip, onRate }) => {
-  const side = useMemo(() => isFlipped ? 'front' : 'back', [isFlipped]);
+  const side = useMemo(() => isFlipped ? 'back' : 'front', [isFlipped]);
   
   return (
     <View style={styles.cardContainer}>
