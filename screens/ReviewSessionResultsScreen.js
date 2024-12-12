@@ -44,11 +44,11 @@ const ReviewSessionEndScreen = ({ route, navigation }) => {
         }}
       />
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={[buttonStyles.secondary, {flex: 1}]} onPress={() => navigation.popToTop()}>
-            <Text style={buttonStyles.secondaryText}>Home</Text>
+        <TouchableOpacity style={buttonStyles.secondary} onPress={() => navigation.navigate('DeckDetail', { deckUuid })}>
+            <Text style={buttonStyles.secondaryText}>Back to deck</Text>
           </TouchableOpacity>      
-          <TouchableOpacity style={[buttonStyles.primary, {flex: 1.5}]} onPress={() => navigation.popTo("DeckDetail", { deckUuid })}>
-            <Text style={buttonStyles.primaryText}>Again</Text>
+          <TouchableOpacity style={buttonStyles.primary} onPress={() => navigation.popToTop()}>
+            <Text style={buttonStyles.primaryText}>Home</Text>
           </TouchableOpacity>
       </View>
     </View>

@@ -2,7 +2,8 @@ import { StyleSheet } from 'react-native';
 
 const buttonStyles = StyleSheet.create({
     primary: {
-        padding: 10,
+        paddingHorizontal: 20,
+        paddingVertical: 10,
         backgroundColor: '#007bff',
         borderRadius: 8,
         alignItems: 'center',
@@ -12,7 +13,8 @@ const buttonStyles = StyleSheet.create({
         fontSize: 16,
     },
     secondary: {
-        padding: 10,
+        paddingHorizontal: 20,
+        paddingVertical: 10,
         borderWidth: 1,
         borderColor: '#ccc',
         borderRadius: 8,
