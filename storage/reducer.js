@@ -37,7 +37,7 @@ const deckReducer = (state = initialState, action) => {
       case DELETE_DECK: {
         return {
           ...state,
-          decks: state.decks.filter(deck => deck.name !== action.payload)
+          decks: state.decks.filter(deck => deck.uuid !== action.payload)
         }
       }
 
