@@ -51,7 +51,6 @@ const EditDeckScreen = ({ route, navigation }) => {
                   color="#333"
                 />
               </TouchableOpacity>
-              {/* Search Icon */}
             </View>
           </View>
       </SearchHeader>

@@ -3,8 +3,8 @@ import { FlashCard, FlashCardDeck, FlashCardSide } from "./types";
 import uuid from "react-native-uuid";
 
 function createCard(
-    front: FlashCardSide | string,
-    back: FlashCardSide | string
+    front: FlashCardSide | string = '',
+    back: FlashCardSide | string = ''
 ): FlashCard {
     return {
         ...createEmptyCard(),
