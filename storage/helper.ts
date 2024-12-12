@@ -63,10 +63,10 @@ const cardReviewRatings = [
 ];
 
 const cardStateColors = {
-    [State.New]: "blue",
-    [State.Learning]: "green",
-    [State.Review]: "yellow",
-    [State.Relearning]: "red"
+    [State.New]: "#057cfc",
+    [State.Learning]: "#19aa0f",
+    [State.Review]: "#fcca05",
+    [State.Relearning]: "#e25128"
 };
 
 export { createCard, createDeck, isDue, generateSessionCards, cardReviewRatings, cardStateColors }
