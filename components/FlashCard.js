@@ -8,7 +8,7 @@ const FlashCard = ({ content, isFlipped, onFlip, onRate }) => {
   return (
     <View style={styles.cardContainer}>
       <View style={styles.card}>
-        {content[side].imageUrl && <Image source={{ uri: content[side].imageUrl }} />}
+        {content[side].imageUrl && <Image source={{ uri: content[side].imageUrl }} style={styles.cardImage} />}
         <Text style={styles.cardText}>{content[side].text}</Text>
       </View>
       {isFlipped ? (
@@ -45,12 +45,18 @@ const styles = StyleSheet.create({
     justifyContent: 'center', 
     alignItems: 'center', 
   },
+  cardImage: {
+    width: '100%',
+    flex: 1,
+    borderRadius: 10
+  },
   cardText: {
     fontSize: 32, 
     fontWeight: 'bold',
     textAlign: 'center',
     flexShrink: 1, 
     maxWidth: '90%', 
+    marginVertical: 15
   },
   flipButton: {
     marginTop: 20,
