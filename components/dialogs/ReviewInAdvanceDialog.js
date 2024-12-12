@@ -51,20 +51,20 @@ const ReviewInAdvanceDialog = ({ deck, isOpen, onClose, onConfirm }) => {
 };
 
 const styles = StyleSheet.create({
-  label: {
-    alignSelf: 'flex-start',
-    fontSize: 14,
-    color: '#666',
-    marginBottom: 8,
-  },
   input: {
-    width: '100%',
     borderWidth: 1,
     borderColor: '#ccc',
     borderRadius: 8,
     padding: 10,
+    margin: 10,
     marginBottom: 20,
   },
+  daysInAdvanceContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'baseline',
+    justifyContent: 'center'
+  }
 });
 
 export default ReviewInAdvanceDialog;
