@@ -7,7 +7,7 @@ const initialState = {
         createDeck("Fruit vocab", [
             createCard("Apple", "A red fruit."),
             createCard("Banana", "A yellow fruit."),
-            createCard("Orange", { text: "A yellow fruit.", imageUrl: './assets/orange.jpeg' })
+            createCard("Orange", "An orange fruit.")
         ]),
         createDeck("Rocket science", [
             createCard("Vectors", "starts with V"),
