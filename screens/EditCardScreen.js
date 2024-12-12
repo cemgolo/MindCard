@@ -32,7 +32,7 @@ const EditCardScreen = ({ route, navigation }) => {
     });
   }
   const deleteCardSideProperty = (property) => {
-    const { [property]: _, otherSideProperties } = cardContent[side];
+    const { [property]: _, ...otherSideProperties } = cardContent[currentTab];
     setCardContent({
       ...cardContent,
       [currentTab]: {
