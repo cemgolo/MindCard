@@ -10,8 +10,8 @@ const DeckList = ({ searchText }) => {
   const navigation = useNavigation();
   const decks = useSelector(state => state.decks);
 
-  const handleDeleteDeck = (deckName) => {
-    dispatch(deleteDeck(deckName));
+  const handleDeleteDeck = (deckUuid) => {
+    dispatch(deleteDeck(deckUuid));
   };
 
   const filteredDecks = decks.filter(deck =>
@@ -25,7 +25,7 @@ const DeckList = ({ searchText }) => {
   const renderDeckItem = ({ item }) => (
     <TouchableOpacity onPress={() => handleDeckPress(item)} style={styles.deckItem}>
       <Text style={styles.deckName}>{item.name}</Text>
-      <DeleteButton onPress={() => handleDeleteDeck(item.name)}/>
+      <DeleteButton onPress={() => handleDeleteDeck(item.uuid)}/>
     </TouchableOpacity>
   );
 
