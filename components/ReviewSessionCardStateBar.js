@@ -15,9 +15,8 @@ const ReviewSessionCardStateBar = ({ sessionCards }) => {
             {isExpanded
                 ? <CardStatesPieChart cards={sessionCards} title="" height={140} />
                 : Object.entries(stateCounts).map(([state, cardCount]) =>
-                    <View key={state} style={[styles.flexRow, styles.cardStateInfo, isExpanded && {width: '50%'}]}>
+                    <View key={state} style={[styles.flexRow, styles.cardStateInfo]}>
                         <View style={[styles.color, {backgroundColor: cardStateColors[state]}]} />
-                        {isExpanded && <Text>{State[state]}:</Text>}
                         <Text>{cardCount}</Text>
                     </View>
                 )
