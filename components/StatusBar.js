@@ -13,7 +13,7 @@ const StatusBar = () => {
     return acc;
   }, {});
 
-  const statusText = Object.entries(cardStateCounts).map(([state, cardCount]) => `${State[state]}: ${cardCount}`).join(' / ');
+  const statusText = Object.entries(cardStateCounts).map(([state, cardCount]) => `${State[state]}: ${cardCount}`).join(' / ') || 'No cards have been added';
 
   const toggleStatusText = () => {
     setShowStatusText(!showStatusText);
