@@ -11,7 +11,6 @@ type RequireAtLeastOne<T, Keys extends keyof T = keyof T> =
 type FlashCardSide = RequireAtLeastOne<{
     text: string;
     imageUrl: string;
-    audioUrl: string;
 }>
 
 interface FlashCard extends Card {
