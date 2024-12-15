@@ -5,13 +5,13 @@ Mindcard is a flashcard app that helps users study information through the use o
 To install the project, clone the repository and run `npm install`. From there, you can run the app at any time using `npm run start`. Follow the instructions printed in the console to view the app using the methods Expo provides.
 
 ## Technical breakdown
+### Packages
 We made use of some additional dependencies to implement all of the features in the app, such as:
 
 |NPM package|Usage in the app|
 |-----------|-----------|
 |`@react-navigation/native` `@react-navigation/stack`|To navigate across different screens|
-|`@reduxjs/tookit`|To save data on the device in the form of JSON objects|
-|`redux-persist`|To persist data across app sessions|
+|`@reduxjs/tookit` `react-redux` `redux-persist`|To save deck data on the device in the form of JSON objects and make it persist across app sessions|
 |`expo-image-picker`|To make the image picker for creating/editing cards|
 |`react-native-chart-kit`|To show pie charts for card states and the bar chart for the end of a study session|
 |`react-native-modal`|To implement modals (pop-ups) with fluid animations|
