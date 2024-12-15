@@ -5,26 +5,34 @@ import { useState } from "react";
 import CardStatesPieChart from "./CardStatesPieChart";
 
 const ReviewSessionCardStateBar = ({ sessionCards }) => {
-    const stateCounts = [State.New, State.Learning, State.Review, State.Relearning]
-        .reduce((obj, state) => ({ ...obj, [state]: sessionCards[state]?.length ?? 0 }), {});
-
     const [isExpanded, setIsExpanded] = useState(false);
 
     return (
-        <TouchableOpacity style={[styles.flexRow, styles.container]} onPress={() => setIsExpanded(!isExpanded)}>
+        <TouchableOpacity style={styles.container} onPress={() => setIsExpanded(!isExpanded)}>
             {isExpanded
                 ? <CardStatesPieChart cards={sessionCards} title="" height={140} />
-                : Object.entries(stateCounts).map(([state, cardCount]) =>
-                    <View key={state} style={[styles.flexRow, styles.cardStateInfo]}>
-                        <View style={[styles.color, {backgroundColor: cardStateColors[state]}]} />
-                        <Text>{cardCount}</Text>
-                    </View>
-                )
+                : <UnexpandedStateBarContent sessionCards={sessionCards} />
             }
             <Text style={styles.expandIcon}>{isExpanded ? '↑' : '↓'}</Text>
         </TouchableOpacity>
     )
 };
+
+const UnexpandedStateBarContent = ({ sessionCards }) => {
+    const stateCounts = [State.New, State.Learning, State.Review, State.Relearning]
+        .reduce((obj, state) => ({ ...obj, [state]: sessionCards[state]?.length ?? 0 }), {});
+
+    return (
+        <View style={styles.flexRow}>
+            {Object.entries(stateCounts).map(([state, cardCount]) =>
+                <View key={state} style={[styles.flexRow, styles.cardStateInfo]}>
+                    <View style={[styles.color, {backgroundColor: cardStateColors[state]}]} />
+                    <Text>{cardCount}</Text>
+                </View>
+            )}
+        </View>
+    )
+}
 
 const styles = StyleSheet.create({
     flexRow: {
@@ -34,12 +42,13 @@ const styles = StyleSheet.create({
         flexWrap: 'wrap',
     },
     container: {
-        gap: 20,
+        gap: 10,
         backgroundColor: '#e5e5e5',
         padding: 10
     },
     cardStateInfo: {
-        gap: 5
+        gap: 5,
+        marginRight: 20
     },
     color: {
         width: 10,
