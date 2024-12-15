@@ -2,20 +2,20 @@ import { TouchableOpacity, View, Text, StyleSheet } from "react-native";
 import Modal from "react-native-modal";
 import buttonStyles from "../../styles/buttons";
 
-const Dialog = ({ children, isOpen, emoji = "", title = "Unnamed Dialog", confirmLabel = "Confirm", onConfirm, onCancel }) => {
+const Dialog = ({ children, isDestructiveAction = false, isOpen, emoji = "", title = "Unnamed Dialog", confirmLabel = "Confirm", onConfirm, onCancel }) => {
     return (
         <Modal isVisible={isOpen} animationIn={"fadeInUp"} animationOut={"fadeOutDown"} backdropTransitionOutTiming={-1}>
             <View style={styles.contentContainer}>
                 {emoji && <Text style={styles.emoji}>{emoji}</Text>}
                 <Text style={styles.title}>{title}</Text>
                 {children}
-                <ButtonContainer confirmLabel={confirmLabel} onConfirm={onConfirm} onCancel={onCancel} />
+                <ButtonContainer confirmLabel={confirmLabel} isDestructiveAction={isDestructiveAction} onConfirm={onConfirm} onCancel={onCancel} />
             </View>
         </Modal>
     );
 }
 
-const ButtonContainer = ({ confirmLabel, onConfirm, onCancel }) => {
+const ButtonContainer = ({ confirmLabel, isDestructiveAction, onConfirm, onCancel }) => {
     return (
         <View style={styles.buttonContainer}>
             <TouchableOpacity
@@ -26,7 +26,7 @@ const ButtonContainer = ({ confirmLabel, onConfirm, onCancel }) => {
             </TouchableOpacity>
 
             <TouchableOpacity
-            style={[buttonStyles.primary, {flex: 1}]}
+            style={[buttonStyles.primary, isDestructiveAction && {backgroundColor: 'red'}, {flex: 1}]}
             onPress={onConfirm}
             >
                 <Text style={buttonStyles.primaryText}>{confirmLabel}</Text>
