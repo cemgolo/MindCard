@@ -53,3 +53,6 @@ We implemented the JSON structure of each card by creating a TypeScript type `Fl
 To create new cards and decks, we wrote helper functions in [storage/helper.ts](storage/helper.ts). This meant we did not have to manually assign certain properties like the UUID, as they are added automatically when using these functions. The file also contains ways to determine if cards are due or to generate which cards should be studied.
 
 In the [screens/ReviewSessionScreen.js](screens/ReviewSessionScreen.js) file, you can see the `FSRS` class being used (through `fsrs.repeat`) to update the studied card and its values like difficulty and due date. This new version of the card is then saved into the Redux database, replacing the older one.
+
+## Used resources
+- App icon (brain) - Retreived from [BioRender](https://www.biorender.com/icon/brain) with a [license](https://help.biorender.com/hc/en-gb/articles/17605388551197-Licensing-and-usage-of-figures-made-in-BioRender) permitting the use in academic settings ([legal terms](https://www.biorender.com/basic-license))
