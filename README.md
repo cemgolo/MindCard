@@ -12,8 +12,8 @@ We made use of some additional dependencies to implement all of the features in 
 |`@react-navigation/native` `@react-navigation/stack`|To navigate across different screens|
 |`@reduxjs/tookit`|To save data on the device in the form of JSON objects|
 |`redux-persist`|To persist data across app sessions|
-|`expo-image-picker`|To create the image picker for creating/editing cards|
-|`react-native-chart-kit`|To create pie charts for cards and the bar chart for the end of a study session|
+|`expo-image-picker`|To make the image picker for creating/editing cards|
+|`react-native-chart-kit`|To show pie charts for card states and the bar chart for the end of a study session|
 |`react-native-modal`|To implement modals (pop-ups) with fluid animations|
 |`react-native-uuid`|To uniquely identify decks and cards|
 |`ts-fsrs`|To determine when a card should be shown again after rating it. This is the spaced-repetition algorithm that powers the app and allows for long term studying.|
@@ -52,4 +52,4 @@ We implemented the JSON structure of each card by creating a TypeScript type `Fl
 
 To create new cards and decks, we wrote helper functions in [storage/helper.ts](storage/helper.ts). This meant we did not have to manually assign certain properties like the UUID, as they are added automatically when using these functions. The file also contains ways to determine if cards are due or to generate which cards should be studied.
 
-In the [screens/ReviewSessionScreen.js](screens/ReviewSessionScreen.js) file, you can see the `FSRS` class being used to update the studied card and assign values like difficulty and new due dates. Through the function `fsrs.repeat`, a new/updated card is created that replaces the old one that is saved in the Redux database.
+In the [screens/ReviewSessionScreen.js](screens/ReviewSessionScreen.js) file, you can see the `FSRS` class being used (through `fsrs.repeat`) to update the studied card and its values like difficulty and due date. This new version of the card is then saved into the Redux database, replacing the older one.
